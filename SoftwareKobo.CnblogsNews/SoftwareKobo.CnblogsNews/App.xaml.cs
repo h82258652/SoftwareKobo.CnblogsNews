@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 // “空白应用程序”模板在 http://go.microsoft.com/fwlink/?LinkId=391641 上有介绍
+using SoftwareKobo.CnblogsNews.View;
 
 namespace SoftwareKobo.CnblogsNews
 {
