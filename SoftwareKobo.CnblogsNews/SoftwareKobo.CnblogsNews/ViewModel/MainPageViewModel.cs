@@ -21,6 +21,19 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
             }
         }
 
+        public ICommand RefreshCommand
+        {
+            get
+            {
+                return new RelayCommand(RefreshCommandExecute);
+            }
+        }
+
+        public void RefreshCommandExecute()
+        {
+            // TODO
+        }
+
         public int CurrentPage
         {
             get
