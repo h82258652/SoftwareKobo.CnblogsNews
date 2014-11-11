@@ -73,7 +73,7 @@ namespace SoftwareKobo.CnblogsNews.Service
             return panel;
         }
 
-        public static void RenderNode(INode node, StackPanel panel, StringBuilder textBuffer)
+        public static async void RenderNode(INode node, StackPanel panel, StringBuilder textBuffer)
         {
             foreach (var childNode in node.ChildNodes)
             {
@@ -126,7 +126,7 @@ namespace SoftwareKobo.CnblogsNews.Service
                         }
                         else
                         {
-                            new MessageDialog(childNode.TextContent, "unknow html tag under ol").ShowAsync().GetResults();
+                            await new MessageDialog(childNode.TextContent, "unknow html tag under ol").ShowAsync();
                             Debugger.Break();
                         }
                     }
@@ -141,7 +141,7 @@ namespace SoftwareKobo.CnblogsNews.Service
                 }
                 else
                 {
-                    new MessageDialog(childNode.TextContent, "unknow html tag").ShowAsync().GetResults();
+                    await new MessageDialog(childNode.TextContent, "unknow html tag").ShowAsync();
                     Debugger.Break();
                 }
             }

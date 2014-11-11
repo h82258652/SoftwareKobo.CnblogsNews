@@ -154,15 +154,20 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
                 return;
             }
             this.IsLoading = true;
+            Exception exception = null;
             try
             {
                 var news = await NewsService.DownloadNews(CurrentPage);
                 ScrollView();
                 this.NewsItems = news;
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-                new MessageDialog(exception.Message, "错误").ShowAsync().GetResults();
+                exception = ex;
+            }
+            if (exception!=null)
+            {
+                await new MessageDialog(exception.Message, "错误").ShowAsync();
             }
             this.IsLoading = false;
         }
