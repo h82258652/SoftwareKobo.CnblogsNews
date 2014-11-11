@@ -149,7 +149,11 @@ namespace SoftwareKobo.CnblogsNews.Service
 
         public static void RenderNode(INode node, StackPanel panel)
         {
-            RenderNode(node, panel, new StringBuilder());
+            var textBuffer = new StringBuilder();
+            RenderNode(node, panel, textBuffer);
+
+            // 确保内容完全输出。
+            RenderText(panel, textBuffer);
         }
 
         public static void RenderText(StackPanel panel, StringBuilder textBuffer, bool bold = false)
