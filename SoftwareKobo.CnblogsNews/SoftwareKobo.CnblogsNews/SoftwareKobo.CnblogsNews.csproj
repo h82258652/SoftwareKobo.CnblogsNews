@@ -86,6 +86,7 @@
     <Compile Include="Dialog\JumpPageDialog.xaml.cs">
       <DependentUpon>JumpPageDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\News.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
