@@ -10,7 +10,7 @@ namespace SoftwareKobo.CnblogsNews.Converter
         {
             if (value is bool)
             {
-                return (bool) value ? Visibility.Visible : Visibility.Collapsed;
+                return (bool)value ? Visibility.Visible : Visibility.Collapsed;
             }
             throw new InvalidCastException("输入的不是布尔类型。");
         }

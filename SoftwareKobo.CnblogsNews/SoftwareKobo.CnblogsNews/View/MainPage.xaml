@@ -30,7 +30,9 @@
                           Command="{Binding Path=ForwardCommand}" />
             <CommandBar.SecondaryCommands>
                 <AppBarButton Label="转到...页"
-                              Command="{Binding Path=JumpPageCommand}"></AppBarButton>
+                              Command="{Binding Path=JumpPageCommand}"/>
+                <AppBarButton Label="关于"
+                              Command="{Binding Path=AboutCommand}"/>
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
@@ -47,11 +49,11 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
                 <TextBlock Text="第"
-                           Style="{StaticResource PageStyle}"/>
+                           Style="{StaticResource PageStyle}" />
                 <TextBlock Text="{Binding Path=CurrentPage}"
-                           Style="{StaticResource PageStyle}"/>
+                           Style="{StaticResource PageStyle}" />
                 <TextBlock Text="页"
-                           Style="{StaticResource PageStyle}"/>
+                           Style="{StaticResource PageStyle}" />
             </StackPanel>
             <ListView x:Name="LvwNews"
                       Grid.Row="1"
@@ -60,24 +62,26 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Margin="20,0,20,10">
-                            <TextBlock Text="{Binding Path=Title}" Style="{StaticResource NewsItemTitleStyle}"/>
-                            <TextBlock Text="{Binding Path=PublishTime}" Style="{StaticResource NewsItemPublishTimeStyle}"/>
+                            <TextBlock Text="{Binding Path=Title}"
+                                       Style="{StaticResource NewsItemTitleStyle}" />
+                            <TextBlock Text="{Binding Path=PublishTime}"
+                                       Style="{StaticResource NewsItemPublishTimeStyle}" />
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <StackPanel/>
+                        <StackPanel />
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="ItemClick">
-                        <core:InvokeCommandAction Command="{Binding Path=NewsItemClickCommand}"/>
+                        <core:InvokeCommandAction Command="{Binding Path=NewsItemClickCommand}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </ListView>
         </Grid>
         <ProgressBar IsIndeterminate="True"
-                     Visibility="{Binding Path=IsLoading,Converter={StaticResource VisibilityConverter}}"/>
+                     Visibility="{Binding Path=IsLoading,Converter={StaticResource VisibilityConverter}}" />
     </Grid>
 </Page>

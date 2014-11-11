@@ -13,10 +13,23 @@
            TargetType="TextBlock"
            BasedOn="{StaticResource ListViewItemTextBlockStyle}">
         <Setter Property="TextWrapping"
-                Value="Wrap"></Setter>
+                Value="Wrap" />
     </Style>
     <Style x:Name="NewsItemPublishTimeStyle"
            TargetType="TextBlock"
            BasedOn="{StaticResource ListViewItemSubheaderTextBlockStyle}">
+    </Style>
+    <Style x:Name="NewsDetailTitleStyle"
+           TargetType="TextBlock">
+        <Setter Property="FontSize"
+                Value="{ThemeResource TextStyleExtraExtraLargeFontSize}" />
+        <Setter Property="TextWrapping"
+                Value="Wrap" />
+        <Setter Property="HorizontalAlignment"
+                Value="Center" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="Margin"
+                Value="10,0,10,0" />
     </Style>
 </ResourceDictionary>

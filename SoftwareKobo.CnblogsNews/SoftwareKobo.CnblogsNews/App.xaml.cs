@@ -1,23 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+﻿// “空白应用程序”模板在 http://go.microsoft.com/fwlink/?LinkId=391641 上有介绍
+using SoftwareKobo.CnblogsNews.View;
+using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
-
-// “空白应用程序”模板在 http://go.microsoft.com/fwlink/?LinkId=391641 上有介绍
-using SoftwareKobo.CnblogsNews.View;
 
 namespace SoftwareKobo.CnblogsNews
 {
@@ -36,6 +26,7 @@ namespace SoftwareKobo.CnblogsNews
         {
             this.InitializeComponent();
             this.Suspending += this.OnSuspending;
+            this.UnhandledException += this.OnUnhandledException;
         }
 
         /// <summary>
@@ -103,18 +94,6 @@ namespace SoftwareKobo.CnblogsNews
         }
 
         /// <summary>
-        /// 启动应用程序后还原内容转换。
-        /// </summary>
-        /// <param name="sender">附加了处理程序的对象。</param>
-        /// <param name="e">有关导航事件的详细信息。</param>
-        private void RootFrame_FirstNavigated(object sender, NavigationEventArgs e)
-        {
-            var rootFrame = sender as Frame;
-            rootFrame.ContentTransitions = this.transitions ?? new TransitionCollection() { new NavigationThemeTransition() };
-            rootFrame.Navigated -= this.RootFrame_FirstNavigated;
-        }
-
-        /// <summary>
         /// 在将要挂起应用程序执行时调用。    在不知道应用程序
         /// 将被终止还是恢复的情况下保存应用程序状态，
         /// 并让内存内容保持不变。
@@ -127,6 +106,24 @@ namespace SoftwareKobo.CnblogsNews
 
             // TODO: 保存应用程序状态并停止任何后台活动
             deferral.Complete();
+        }
+
+        private async void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            var dialog = new MessageDialog(e.Message);
+            await dialog.ShowAsync();
+        }
+
+        /// <summary>
+        /// 启动应用程序后还原内容转换。
+        /// </summary>
+        /// <param name="sender">附加了处理程序的对象。</param>
+        /// <param name="e">有关导航事件的详细信息。</param>
+        private void RootFrame_FirstNavigated(object sender, NavigationEventArgs e)
+        {
+            var rootFrame = sender as Frame;
+            rootFrame.ContentTransitions = this.transitions ?? new TransitionCollection() { new NavigationThemeTransition() };
+            rootFrame.Navigated -= this.RootFrame_FirstNavigated;
         }
     }
 }

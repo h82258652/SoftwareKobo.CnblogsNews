@@ -1,18 +1,17 @@
-﻿// “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
-using SoftwareKobo.CnblogsNews.Model;
-using SoftwareKobo.CnblogsNews.ViewModel;
-using Windows.Phone.UI.Input;
+﻿using Windows.Phone.UI.Input;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+
+// “基本页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
 
 namespace SoftwareKobo.CnblogsNews.View
 {
     /// <summary>
-    /// 可用于自身或导航至 Frame 内部的空白页。
+    /// 可独立使用或用于导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class NewsDetailPage : Page
+    public sealed partial class AboutPage : Page
     {
-        public NewsDetailPage()
+        public AboutPage()
         {
             this.InitializeComponent();
         }
@@ -32,13 +31,6 @@ namespace SoftwareKobo.CnblogsNews.View
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;
-
-            var news = e.Parameter as News;
-            var vm = this.DataContext as NewsDetailPageViewModel;
-            if (news != null && vm != null)
-            {
-                vm.Render(news);
-            }
 
             base.OnNavigatedTo(e);
         }

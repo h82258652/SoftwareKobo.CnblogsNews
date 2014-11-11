@@ -1,14 +1,14 @@
-﻿using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using Windows.UI.Xaml.Controls;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using SoftwareKobo.CnblogsNews.Model;
 using SoftwareKobo.CnblogsNews.Service;
 using System;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Popups;
+using Windows.UI.Xaml.Controls;
 
 namespace SoftwareKobo.CnblogsNews.ViewModel
 {
@@ -16,33 +16,28 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
     {
         private int _currentPage;
 
+        private bool _isLoading;
+
+        private ObservableCollection<News> _newsItems;
+
         public MainPageViewModel()
         {
-            CurrentPage = 1;
-            GetNews();
+            OnCreated();
         }
-        
+
+        public ICommand AboutCommand
+        {
+            get
+            {
+                return new RelayCommand(AboutCommandExecute);
+            }
+        }
+
         public ICommand BackCommand
         {
             get
             {
                 return new RelayCommand(BackCommandExecute, BackCommandCanExecute);
-            }
-        }
-
-        public ICommand RefreshCommand
-        {
-            get
-            {
-                return new RelayCommand(RefreshCommandExecute);
-            }
-        }
-
-        public async void RefreshCommandExecute()
-        {
-            if (IsLoading == false)
-            {
-                await GetNews();
             }
         }
 
@@ -68,6 +63,61 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
             }
         }
 
+        public bool IsLoading
+        {
+            get
+            {
+                return _isLoading;
+            }
+            set
+            {
+                _isLoading = value;
+                RaisePropertyChanged(() => IsLoading);
+            }
+        }
+
+        public ICommand JumpPageCommand
+        {
+            get
+            {
+                return new RelayCommand(JumpPageCommandExecute);
+            }
+        }
+
+        public ICommand NewsItemClickCommand
+        {
+            get
+            {
+                return new RelayCommand<ItemClickEventArgs>(NewsItemClickCommandExecute);
+            }
+        }
+
+        public ObservableCollection<News> NewsItems
+        {
+            get
+            {
+                return _newsItems;
+            }
+            set
+            {
+                _newsItems = value;
+                RaisePropertyChanged(() => NewsItems);
+            }
+        }
+
+        public ICommand RefreshCommand
+        {
+            get
+            {
+                return new RelayCommand(RefreshCommandExecute);
+            }
+        }
+
+        public void AboutCommandExecute()
+        {
+            Messenger.Default.Send<string>("about");
+        }
+
         public bool BackCommandCanExecute()
         {
             return CurrentPage > 1;
@@ -87,9 +137,13 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
             return CurrentPage < 100;
         }
 
-        private void ScrollView()
+        public async void ForwardCommandExecute()
         {
-            Messenger.Default.Send<string>("scrolltop");
+            if (IsLoading == false)
+            {
+                CurrentPage++;
+                await GetNews();
+            }
         }
 
         public async Task GetNews()
@@ -108,41 +162,9 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
             }
             catch (Exception exception)
             {
-                new MessageDialog(exception.Message, "错误").ShowAsync().GetAwaiter().GetResult();
+                new MessageDialog(exception.Message, "错误").ShowAsync().GetResults();
             }
             this.IsLoading = false;
-        }
-
-        public async void ForwardCommandExecute()
-        {
-            if (IsLoading == false)
-            {
-                CurrentPage++;
-                await GetNews();
-            }
-        }
-
-        public ICommand JumpPageCommand
-        {
-            get
-            {
-                return new RelayCommand(JumpPageCommandExecute);
-            }
-        }
-
-        private bool _isLoading;
-
-        public bool IsLoading
-        {
-            get
-            {
-                return _isLoading;
-            }
-            set
-            {
-                _isLoading = value;
-                RaisePropertyChanged(() => IsLoading);
-            }
         }
 
         public async void JumpPageCommandExecute()
@@ -162,29 +184,6 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
             }
         }
 
-        private ObservableCollection<News> _newsItems;
-
-        public ObservableCollection<News> NewsItems
-        {
-            get
-            {
-                return _newsItems;
-            }
-            set
-            {
-                _newsItems = value;
-                RaisePropertyChanged(() => NewsItems);
-            }
-        }
-
-        public ICommand NewsItemClickCommand
-        {
-            get
-            {
-                return new RelayCommand<ItemClickEventArgs>(NewsItemClickCommandExecute);
-            }
-        }
-
         public void NewsItemClickCommandExecute(ItemClickEventArgs e)
         {
             if (e == null || e.ClickedItem == null)
@@ -199,11 +198,23 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
             Messenger.Default.Send<News>(news);
         }
 
-        public override void Cleanup()
+        public async void OnCreated()
         {
-            NewsItems = null;
+            CurrentPage = 1;
+            await GetNews();
+        }
 
-            base.Cleanup();
+        public async void RefreshCommandExecute()
+        {
+            if (IsLoading == false)
+            {
+                await GetNews();
+            }
+        }
+
+        private void ScrollView()
+        {
+            Messenger.Default.Send<string>("scrolltop");
         }
     }
 }
