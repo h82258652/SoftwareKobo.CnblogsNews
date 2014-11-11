@@ -1,6 +1,9 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using SoftwareKobo.CnblogsNews.Service;
+using System;
 using System.Windows.Input;
+using Windows.UI.Popups;
 
 namespace SoftwareKobo.CnblogsNews.ViewModel
 {
@@ -74,6 +77,46 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
         public void ForwardCommandExecute()
         {
             // TODO
+        }
+
+        public ICommand JumpPageCommand
+        {
+            get
+            {
+                return new RelayCommand(JumpPageCommandExecute);
+            }
+        }
+
+        private bool _isLoading;
+
+        public bool IsLoading
+        {
+            get
+            {
+                return _isLoading;
+            }
+            set
+            {
+                _isLoading = value;
+                RaisePropertyChanged(() => IsLoading);
+            }
+        }
+
+        public async void JumpPageCommandExecute()
+        {
+            var page = await JumpPageService.GetPage();
+            if (page.HasValue)
+            {
+                if (page.Value > 0 && page.Value <= 100)
+                {
+                    CurrentPage = page.Value;
+                    // TODO
+                }
+                else
+                {
+                    await new MessageDialog("请输入大于 0，小于等于 100 的整数。").ShowAsync();
+                }
+            }
         }
     }
 }

@@ -6,6 +6,9 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="using:SoftwareKobo.CnblogsNews.ViewModel"
       xmlns:converter="using:SoftwareKobo.CnblogsNews.Converter"
+      xmlns:system="using:System"
+      xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:core="using:Microsoft.Xaml.Interactions.Core"
       mc:Ignorable="d"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.DataContext>
@@ -18,18 +21,63 @@
         <CommandBar>
             <AppBarButton Icon="Back"
                           Label="上一页"
-                          Command="{Binding Path=BackCommand}"/>
+                          Command="{Binding Path=BackCommand}" />
             <AppBarButton Icon="Refresh"
                           Label="刷新"
-                          Command="{Binding Path=RefreshCommand}"/>
+                          Command="{Binding Path=RefreshCommand}" />
             <AppBarButton Icon="Forward"
                           Label="下一页"
-                          Command="{Binding Path=ForwardCommand}"/>
+                          Command="{Binding Path=ForwardCommand}" />
             <CommandBar.SecondaryCommands>
-                <AppBarButton Label="转到...页"></AppBarButton>
+                <AppBarButton Label="转到...页"
+                              Command="{Binding Path=JumpPageCommand}"></AppBarButton>
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
     <Grid>
+        <Grid x:Name="GdLayout"
+              Margin="0,-26.667,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="26.667"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackPanel x:Name="SpPage"
+                        Grid.Row="0"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                <TextBlock Text="第"
+                           Style="{StaticResource PageStyle}"/>
+                <TextBlock Text="{Binding Path=CurrentPage}"
+                           Style="{StaticResource PageStyle}"/>
+                <TextBlock Text="页"
+                           Style="{StaticResource PageStyle}"/>
+            </StackPanel>
+            <ListView x:Name="LvwNewsItem"
+                      Grid.Row="1"
+                      ItemsSource="{Binding Path=NewsItems}"
+                      IsItemClickEnabled="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="20,0,20,10">
+                            <TextBlock Text="{Binding Path=Title}" Style="{StaticResource NewsItemTitleStyle}"/>
+                            <TextBlock Text="{Binding Path=PublishTime}" Style="{StaticResource NewsItemPublishTimeStyle}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="ItemClick">
+                        <core:InvokeCommandAction Command="{Binding Path=NewsClickCommand}"/>
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+            </ListView>
+        </Grid>
+        <ProgressBar IsIndeterminate="True"
+                     Visibility="{Binding Path=IsLoading,Converter={StaticResource VisibilityConverter}}"/>
     </Grid>
 </Page>
