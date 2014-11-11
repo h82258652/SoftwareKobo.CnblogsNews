@@ -53,7 +53,7 @@
                 <TextBlock Text="页"
                            Style="{StaticResource PageStyle}"/>
             </StackPanel>
-            <ListView x:Name="LvwNewsItem"
+            <ListView x:Name="LvwNews"
                       Grid.Row="1"
                       ItemsSource="{Binding Path=NewsItems}"
                       IsItemClickEnabled="True">
@@ -72,7 +72,7 @@
                 </ListView.ItemsPanel>
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="ItemClick">
-                        <core:InvokeCommandAction Command="{Binding Path=NewsClickCommand}"/>
+                        <core:InvokeCommandAction Command="{Binding Path=NewsItemClickCommand}"/>
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </ListView>

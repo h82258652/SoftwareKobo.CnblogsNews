@@ -1,7 +1,13 @@
-﻿using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
+﻿// “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=391641 上有介绍
 
-// “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=391641 上有介绍
+using System.Threading.Tasks;
+using GalaSoft.MvvmLight.Messaging;
+using SoftwareKobo.CnblogsNews.Model;
+using System.Linq;
+using Windows.Graphics.Display;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace SoftwareKobo.CnblogsNews.View
 {
@@ -17,6 +23,37 @@ namespace SoftwareKobo.CnblogsNews.View
             this.NavigationCacheMode = NavigationCacheMode.Required;
         }
 
+        public void NavigateToNewsDetail(News news)
+        {
+            if (news != null)
+            {
+                Frame.Navigate(typeof(NewsDetailPage), news);
+            }
+        }
+
+        public void ProcessMessageFromViewModel(string message)
+        {
+            if (message == "about")
+            {
+                // TODO
+            }
+            else if (message == "scrolltop")
+            {
+                LvwNews.ScrollIntoView(LvwNews.Items.FirstOrDefault());
+            }
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            DisplayInformation.GetForCurrentView().OrientationChanged -= OrientationChanged;
+
+            Messenger.Default.Unregister<News>(this, NavigateToNewsDetail);
+
+            Messenger.Default.Unregister<string>(this, ProcessMessageFromViewModel);
+
+            base.OnNavigatedFrom(e);
+        }
+        
         /// <summary>
         /// 在此页将要在 Frame 中显示时进行调用。
         /// </summary>
@@ -24,13 +61,68 @@ namespace SoftwareKobo.CnblogsNews.View
         /// 此参数通常用于配置页。</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            // TODO: 准备此处显示的页面。
+            DisplayInformation.GetForCurrentView().OrientationChanged += OrientationChanged;
 
-            // TODO: 如果您的应用程序包含多个页面，请确保
-            // 通过注册以下事件来处理硬件“后退”按钮:
-            // Windows.Phone.UI.Input.HardwareButtons.BackPressed 事件。
-            // 如果使用由某些模板提供的 NavigationHelper，
-            // 则系统会为您处理该事件。
+            Messenger.Default.Register<News>(this, NavigateToNewsDetail);
+
+            Messenger.Default.Register<string>(this, ProcessMessageFromViewModel);
+
+            base.OnNavigatedTo(e);
+        }
+
+        private void OrientationChanged(DisplayInformation sender, object args)
+        {
+            if (sender.CurrentOrientation == DisplayOrientations.Portrait)
+            {
+                GdLayout.Margin = new Thickness(0, -26.667, 0, 0);
+                GdLayout.ColumnDefinitions.Clear();
+                GdLayout.RowDefinitions.Clear();
+                GdLayout.RowDefinitions.Add(new RowDefinition()
+                {
+                    Height = new GridLength(26.667, GridUnitType.Pixel)
+                });
+                GdLayout.RowDefinitions.Add(new RowDefinition()
+                {
+                    Height = new GridLength(1, GridUnitType.Star)
+                });
+                Grid.SetRow(SpPage, 0);
+                Grid.SetRow(LvwNews, 1);
+                SpPage.Orientation = Orientation.Horizontal;
+            }
+            else if (sender.CurrentOrientation == DisplayOrientations.Landscape)
+            {
+                GdLayout.Margin = new Thickness(-60, 0, 0, 0);
+                GdLayout.ColumnDefinitions.Clear();
+                GdLayout.RowDefinitions.Clear();
+                GdLayout.ColumnDefinitions.Add(new ColumnDefinition()
+                {
+                    Width = new GridLength(26.667, GridUnitType.Pixel)
+                });
+                GdLayout.ColumnDefinitions.Add(new ColumnDefinition()
+                {
+                    Width = new GridLength(1, GridUnitType.Star)
+                });
+                Grid.SetColumn(SpPage, 0);
+                Grid.SetColumn(LvwNews, 1);
+                SpPage.Orientation = Orientation.Vertical;
+            }
+            else if (sender.CurrentOrientation == DisplayOrientations.LandscapeFlipped)
+            {
+                GdLayout.Margin = new Thickness(0, 0, -60, 0);
+                GdLayout.ColumnDefinitions.Clear();
+                GdLayout.RowDefinitions.Clear();
+                GdLayout.ColumnDefinitions.Add(new ColumnDefinition()
+                {
+                    Width = new GridLength(1, GridUnitType.Star)
+                });
+                GdLayout.ColumnDefinitions.Add(new ColumnDefinition()
+                {
+                    Width = new GridLength(26.667, GridUnitType.Pixel)
+                });
+                Grid.SetColumn(SpPage, 1);
+                Grid.SetColumn(LvwNews, 0);
+                SpPage.Orientation = Orientation.Vertical;
+            }
         }
     }
 }

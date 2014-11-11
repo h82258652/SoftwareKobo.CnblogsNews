@@ -3,17 +3,20 @@
     <Style x:Key="PageStyle"
            TargetType="TextBlock">
         <Setter Property="FontSize"
-                Value="{ThemeResource TextStyleLargeFontSize}"/>
+                Value="{ThemeResource TextStyleLargeFontSize}" />
         <Setter Property="HorizontalAlignment"
-                Value="Center"/>
+                Value="Center" />
         <Setter Property="VerticalAlignment"
-                Value="Center"/>
+                Value="Center" />
     </Style>
-    <Style x:Name="NewsItemTitleStyle" TargetType="TextBlock">
-        <Setter Property="Style" Value="{ThemeResource ListViewItemTextBlockStyle}"/>
-        <Setter Property="TextWrapping" Value="Wrap"></Setter>
+    <Style x:Name="NewsItemTitleStyle"
+           TargetType="TextBlock"
+           BasedOn="{StaticResource ListViewItemTextBlockStyle}">
+        <Setter Property="TextWrapping"
+                Value="Wrap"></Setter>
     </Style>
-    <Style x:Name="NewsItemPublishTimeStyle" TargetType="TextBlock">
-        <Setter Property="Style" Value="{ThemeResource ListViewItemSubheaderTextBlockStyle}"/>
+    <Style x:Name="NewsItemPublishTimeStyle"
+           TargetType="TextBlock"
+           BasedOn="{StaticResource ListViewItemSubheaderTextBlockStyle}">
     </Style>
 </ResourceDictionary>

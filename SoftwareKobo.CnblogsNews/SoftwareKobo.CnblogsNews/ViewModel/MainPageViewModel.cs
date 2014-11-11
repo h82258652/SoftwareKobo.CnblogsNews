@@ -1,5 +1,10 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
+using SoftwareKobo.CnblogsNews.Model;
 using SoftwareKobo.CnblogsNews.Service;
 using System;
 using System.Windows.Input;
@@ -14,8 +19,9 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
         public MainPageViewModel()
         {
             CurrentPage = 1;
+            GetNews();
         }
-
+        
         public ICommand BackCommand
         {
             get
@@ -32,9 +38,12 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
             }
         }
 
-        public void RefreshCommandExecute()
+        public async void RefreshCommandExecute()
         {
-            // TODO
+            if (IsLoading == false)
+            {
+                await GetNews();
+            }
         }
 
         public int CurrentPage
@@ -64,9 +73,13 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
             return CurrentPage > 1;
         }
 
-        public void BackCommandExecute()
+        public async void BackCommandExecute()
         {
-            // TODO
+            if (IsLoading == false)
+            {
+                CurrentPage--;
+                await GetNews();
+            }
         }
 
         public bool ForwardCommandCanExecute()
@@ -74,9 +87,39 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
             return CurrentPage < 100;
         }
 
-        public void ForwardCommandExecute()
+        private void ScrollView()
         {
-            // TODO
+            Messenger.Default.Send<string>("scrolltop");
+        }
+
+        public async Task GetNews()
+        {
+            if (NetworkService.IsNetworkAvailable() == false)
+            {
+                await new MessageDialog("请检查网络连接。").ShowAsync();
+                return;
+            }
+            this.IsLoading = true;
+            try
+            {
+                var news = await NewsService.DownloadNews(CurrentPage);
+                ScrollView();
+                this.NewsItems = news;
+            }
+            catch (Exception exception)
+            {
+                new MessageDialog(exception.Message, "错误").ShowAsync().GetAwaiter().GetResult();
+            }
+            this.IsLoading = false;
+        }
+
+        public async void ForwardCommandExecute()
+        {
+            if (IsLoading == false)
+            {
+                CurrentPage++;
+                await GetNews();
+            }
         }
 
         public ICommand JumpPageCommand
@@ -110,13 +153,57 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
                 if (page.Value > 0 && page.Value <= 100)
                 {
                     CurrentPage = page.Value;
-                    // TODO
+                    await GetNews();
                 }
                 else
                 {
                     await new MessageDialog("请输入大于 0，小于等于 100 的整数。").ShowAsync();
                 }
             }
+        }
+
+        private ObservableCollection<News> _newsItems;
+
+        public ObservableCollection<News> NewsItems
+        {
+            get
+            {
+                return _newsItems;
+            }
+            set
+            {
+                _newsItems = value;
+                RaisePropertyChanged(() => NewsItems);
+            }
+        }
+
+        public ICommand NewsItemClickCommand
+        {
+            get
+            {
+                return new RelayCommand<ItemClickEventArgs>(NewsItemClickCommandExecute);
+            }
+        }
+
+        public void NewsItemClickCommandExecute(ItemClickEventArgs e)
+        {
+            if (e == null || e.ClickedItem == null)
+            {
+                return;
+            }
+            var news = e.ClickedItem as News;
+            if (news == null)
+            {
+                return;
+            }
+            Messenger.Default.Send<News>(news);
+        }
+
+        public override void Cleanup()
+        {
+            NewsItems = null;
+
+            base.Cleanup();
         }
     }
 }
