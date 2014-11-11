@@ -18,8 +18,13 @@
         <CommandBar>
             <AppBarButton Icon="Back"
                           Label="上一页"
-                          Command="{Binding Path=BackCommand}">
-            </AppBarButton>
+                          Command="{Binding Path=BackCommand}"/>
+            <AppBarButton Icon="Refresh"
+                          Label="刷新"
+                          Command="{Binding Path=RefreshCommand}"/>
+            <AppBarButton Icon="Forward"
+                          Label="下一页"
+                          Command="{Binding Path=ForwardCommand}"/>
             <CommandBar.SecondaryCommands>
                 <AppBarButton Label="转到...页"></AppBarButton>
             </CommandBar.SecondaryCommands>
