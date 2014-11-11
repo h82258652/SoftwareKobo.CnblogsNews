@@ -5,11 +5,26 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="using:SoftwareKobo.CnblogsNews.ViewModel"
+      xmlns:converter="using:SoftwareKobo.CnblogsNews.Converter"
       mc:Ignorable="d"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.DataContext>
         <vm:MainPageViewModel></vm:MainPageViewModel>
     </Page.DataContext>
+    <Page.Resources>
+        <converter:VisibilityConverter x:Key="VisibilityConverter"></converter:VisibilityConverter>
+    </Page.Resources>
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Icon="Back"
+                          Label="上一页"
+                          Command="{Binding Path=BackCommand}">
+            </AppBarButton>
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Label="转到...页"></AppBarButton>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
     <Grid>
     </Grid>
 </Page>

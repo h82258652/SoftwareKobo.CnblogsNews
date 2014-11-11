@@ -83,6 +83,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converter\VisibilityConverter.cs" />
+    <Compile Include="Dialog\JumpPageDialog.xaml.cs">
+      <DependentUpon>JumpPageDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -107,6 +110,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Dialog\JumpPageDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
