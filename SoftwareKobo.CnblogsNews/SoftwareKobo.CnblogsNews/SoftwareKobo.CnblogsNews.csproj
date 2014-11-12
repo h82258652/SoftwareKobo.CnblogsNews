@@ -96,6 +96,7 @@
     <Compile Include="Model\News.cs" />
     <Compile Include="Service\JumpPageService.cs" />
     <Compile Include="Service\NetworkService.cs" />
+    <Compile Include="Service\NewsCommentService.cs" />
     <Compile Include="Service\NewsDetailService.cs" />
     <Compile Include="Service\NewsService.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />

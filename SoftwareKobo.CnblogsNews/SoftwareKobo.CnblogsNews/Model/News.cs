@@ -5,11 +5,32 @@ namespace SoftwareKobo.CnblogsNews.Model
 {
     public class News : ObservableObject
     {
+        private int _commentCount;
+
         private string _publishTime;
 
         private string _title;
 
+        public int CommentCount
+        {
+            get
+            {
+                return _commentCount;
+            }
+            set
+            {
+                _commentCount = value;
+                RaisePropertyChanged(() => CommentCount);
+            }
+        }
+
         public Uri DetailLink
+        {
+            get;
+            set;
+        }
+
+        public string NewsId
         {
             get;
             set;

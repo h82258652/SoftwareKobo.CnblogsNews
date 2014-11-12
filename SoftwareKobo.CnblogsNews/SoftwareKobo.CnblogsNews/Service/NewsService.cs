@@ -72,7 +72,6 @@ namespace SoftwareKobo.CnblogsNews.Service
             filter.CacheControl.ReadBehavior = HttpCacheReadBehavior.MostRecent;
             using (var client = new HttpClient(filter))
             {
-                
                 var html = await client.GetStringAsync(uri);
                 return DocumentBuilder.Html(html);
             }
