@@ -126,7 +126,27 @@ namespace SoftwareKobo.CnblogsNews.Service
                         }
                         else
                         {
-                            await new MessageDialog(childNode.NodeName, "unknow html tag under ol").ShowAsync();
+                            await new MessageDialog(olChildNode.NodeName, "unknow html tag under ol").ShowAsync();
+                            Debugger.Break();
+                        }
+                    }
+                }
+                else if (childNode.NodeName == "ul")
+                {
+                    foreach (var ulChildNode in childNode.ChildNodes)
+                    {
+                        if (ulChildNode.NodeName == "li")
+                        {
+                            textBuffer.Append("● " + childNode.TextContent);
+                            RenderText(panel, textBuffer);
+                        }
+                        else if (ulChildNode.NodeType == NodeType.Text && ulChildNode.TextContent.Replace("\r", string.Empty).Replace("\n", string.Empty).Length <= 0)
+                        {
+                            // Skip empty line break.
+                        }
+                        else
+                        {
+                            await new MessageDialog(ulChildNode.NodeName, "unkonw html tag under ul").ShowAsync();
                             Debugger.Break();
                         }
                     }
