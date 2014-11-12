@@ -1,0 +1,43 @@
+﻿@model List<SoftwareKobo.CnblogsNews.TestServer.Controllers.MController.News>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>博客园新闻手机版</title>
+    <link rel="Stylesheet" type="text/css" href="http://m.cnblogs.com/css/m.css" />
+</head>
+<body>
+    博客园IT新闻:<div class="top_nav">[<a href="http://m.cnblogs.com/">首页</a>][<a href="http://m.cnblogs.com/blog/">博客</a>][<a href="http://space.cnblogs.com/ml/">闪存</a>][<a href="#" onclick="javascript:location.reload()">刷新</a>]</div>
+    @{
+        foreach (var news in Model)
+        {
+            <div class="list_item"><a href="/m/n/@news.Id">@news.Title</a>(@news.PublishTime,<a href="/mc?id=@news.Id">@news.CommentCount</a>/xxx,小于1K</div>
+        }
+    }
+    
+    @*<div class="list_item"><a href="/m/n/508393">人过留名：前索尼工程师在PS4代码段中刻满了自己的名字</a>(28分钟前,<a href="/mc?id=508393">1</a>/143,小于1K)</div>
+    <div class="list_item"><a href="/m/n/508392">见证历史时刻：菲莱登陆彗星全程直播</a>(30分钟前,<a href="/mc?id=508392">0</a>/43,小于1K)</div>
+    <div class="list_item"><a href="/m/n/508391">我国暗物质重大研究成果发表 排除美意实验方向</a>(32分钟前,<a href="/mc?id=508391">0</a>/61,2KB)</div>
+    <div class="list_item"><a href="/m/n/508390">道具老爹为住院宝宝制作小钢铁侠“盔甲”</a>(34分钟前,<a href="/mc?id=508390">0</a>/44,小于1K)</div>
+    <div class="list_item"><a href="/m/n/508389">世界首例8K超高清内窥镜手术在日进行</a>(35分钟前,<a href="/mc?id=508389">0</a>/66,小于1K)</div>
+    <div class="list_item"><a href="/m/n/508388">星战迷为本地儿童医院筹款 穿帝国沙兵制服徒步环游澳洲大陆</a>(37分钟前,<a href="/mc?id=508388">0</a>/38,1KB)</div>
+    <div class="list_item"><a href="/m/n/508387">李彦宏参加过几次黑客马拉松？百度员工算完凌乱了</a>(44分钟前,<a href="/mc?id=508387">2</a>/280,3KB)</div>
+    <div class="list_item"><a href="/m/n/508386">知乎硅谷之行：与其说招聘，倒不如说是一次有趣的社区实验</a>(1小时前,<a href="/mc?id=508386">1</a>/156,3KB)</div>
+    <div class="list_item"><a href="/m/n/508384">HTTP/2的那些事</a>(1小时前,<a href="/mc?id=508384">0</a>/132,2KB)</div>
+    <div class="list_item"><a href="/m/n/508383">处理网站中的重复内容问题</a>(1小时前,<a href="/mc?id=508383">0</a>/126,1KB)</div>
+    <div class="list_item"><a href="/m/n/508382">15款值得学习的小型开源项目，带你快速步入开源世界</a>(1小时前,<a href="/mc?id=508382">0</a>/583,3KB)</div>
+    <div class="list_item"><a href="/m/n/508381">取消高科技产品关税，受益者是谁？</a>(1小时前,<a href="/mc?id=508381">1</a>/308,1KB)</div>
+    <div class="list_item"><a href="/m/n/508380">因用户量过大，微信电话本出现大量无法接收验证码现象</a>(1小时前,<a href="/mc?id=508380">1</a>/410,小于1K)</div>
+    <div class="list_item"><a href="/m/n/508379">我为什么认为苹果应该收购特斯拉</a>(1小时前,<a href="/mc?id=508379">5</a>/203,3KB)</div>
+    <div class="list_item"><a href="/m/n/508378">15个非常有趣的奇特网站，它们将给你带来全新的体验</a>(2小时前,<a href="/mc?id=508378">1</a>/526,4KB)</div>*@
+    <a href="http://news.cnblogs.com/m?page=2">下一页</a><br />
+    &raquo; <a href="http://m.cnblogs.com">手机版首页</a><br />
+    &raquo; <a href="http://space.cnblogs.com/ml/">最新闪存</a><br />
+    &raquo; <a href="http://m.cnblogs.com/blog/">最新博客</a>
+</body>
+</html>
