@@ -126,7 +126,7 @@ namespace SoftwareKobo.CnblogsNews.Service
                         }
                         else
                         {
-                            await new MessageDialog(childNode.TextContent, "unknow html tag under ol").ShowAsync();
+                            await new MessageDialog(childNode.NodeName, "unknow html tag under ol").ShowAsync();
                             Debugger.Break();
                         }
                     }
@@ -141,7 +141,7 @@ namespace SoftwareKobo.CnblogsNews.Service
                 }
                 else
                 {
-                    await new MessageDialog(childNode.TextContent, "unknow html tag").ShowAsync();
+                    await new MessageDialog(childNode.NodeName, "unknow html tag").ShowAsync();
                     Debugger.Break();
                 }
             }
