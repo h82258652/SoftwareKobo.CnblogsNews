@@ -183,7 +183,7 @@ namespace SoftwareKobo.CnblogsNews.Service
         public static void RenderText(StackPanel panel, StringBuilder textBuffer, bool bold = false)
         {
             var text = textBuffer.ToString().Replace("\r", string.Empty).Replace("\n", string.Empty);
-            if (text.Length > 0)
+            if (string.IsNullOrWhiteSpace(text) == false)
             {
                 var textBlock = new TextBlock()
                 {
