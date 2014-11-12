@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="18174h82258652.forWP8.1" Publisher="CN=D8CBB42C-5DD4-4A02-8424-31AF9627DADA" Version="1.1.0.4" />
+  <Identity Name="18174h82258652.forWP8.1" Publisher="CN=D8CBB42C-5DD4-4A02-8424-31AF9627DADA" Version="1.1.0.5" />
   <mp:PhoneIdentity PhoneProductId="7c87feea-4652-4d3c-a731-a0a613453cc2" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>博客园新闻 for WP8.1</DisplayName>
