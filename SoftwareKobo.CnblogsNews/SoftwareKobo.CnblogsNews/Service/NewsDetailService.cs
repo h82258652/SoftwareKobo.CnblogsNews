@@ -135,6 +135,10 @@ namespace SoftwareKobo.CnblogsNews.Service
                 {
                     RenderText(panel, textBuffer);
                 }
+                else if (childNode.NodeName == "center")
+                {
+                    RenderNode(childNode, panel);
+                }
                 else if (childNode.NodeType == NodeType.Text)
                 {
                     textBuffer.Append(childNode.TextContent);
