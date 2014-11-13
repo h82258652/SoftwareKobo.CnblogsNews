@@ -137,7 +137,7 @@ namespace SoftwareKobo.CnblogsNews.Service
                     {
                         if (ulChildNode.NodeName == "li")
                         {
-                            textBuffer.Append("● " + childNode.TextContent);
+                            textBuffer.Append("● " + ulChildNode.TextContent);
                             RenderText(panel, textBuffer);
                         }
                         else if (ulChildNode.NodeType == NodeType.Text && ulChildNode.TextContent.Replace("\r", string.Empty).Replace("\n", string.Empty).Length <= 0)
