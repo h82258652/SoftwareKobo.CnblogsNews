@@ -236,7 +236,7 @@ namespace SoftwareKobo.CnblogsNews.Service
                 }
                 else
                 {
-                    await new MessageDialog(childNode.NodeName, "unknow html tag").ShowAsync();
+                    await new DialogService().ShowMessageBox(childNode.NodeName, "unkonw html tag");
                     Debugger.Break();
                 }
             }
