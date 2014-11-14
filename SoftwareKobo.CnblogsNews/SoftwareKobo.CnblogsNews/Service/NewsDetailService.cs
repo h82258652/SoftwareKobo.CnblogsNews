@@ -213,7 +213,7 @@ namespace SoftwareKobo.CnblogsNews.Service
                         }
                         else
                         {
-                            await new MessageDialog(ulChildNode.NodeName, "unkonw html tag under ul").ShowAsync();
+                            await new DialogService().ShowMessageBox(ulChildNode.NodeName, "unknow html tag under ul");
                             Debugger.Break();
                         }
                     }
