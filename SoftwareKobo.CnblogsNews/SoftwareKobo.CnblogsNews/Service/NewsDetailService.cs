@@ -47,7 +47,7 @@ namespace SoftwareKobo.CnblogsNews.Service
             var tfootNode = node.ChildNodes.FirstOrDefault(temp => temp.NodeName == "tfoot");
             if (theadNode != null)
             {
-                await new DialogService().ShowMessageBox("thead","unknow html tag under table");
+                await new DialogService().ShowMessageBox("thead", "unknow html tag under table");
             }
             if (tfootNode != null)
             {
@@ -167,9 +167,17 @@ namespace SoftwareKobo.CnblogsNews.Service
                 }
                 else if (childNode.NodeName == "strong")
                 {
+                    // 清空之前的输出。
                     RenderText(panel, textBuffer);
-                    textBuffer.Append(childNode.TextContent);
-                    RenderText(panel, textBuffer, true);
+                    if (childNode.ChildNodes.Count() == 1 && childNode.ChildNodes.ElementAt(0).NodeType == NodeType.Text)
+                    {
+                        textBuffer.Append(childNode.TextContent);
+                        RenderText(panel, textBuffer, true);
+                    }
+                    else
+                    {
+                        RenderNode(childNode, panel, textBuffer);
+                    }
                 }
                 else if (childNode.NodeName == "blockquote")
                 {
