@@ -80,10 +80,6 @@ namespace SoftwareKobo.CnblogsNews.Service
                 var title = actionLinkNode.InnerHtml;
                 var publishTime = publishTimeNode.Text.TrimStart('(').TrimEnd(',');
 
-                //var link = new Uri(new Uri(NewsBaseUrl, UriKind.Absolute),
-                //     actionLinkNode.GetAttribute("href"));
-                //var title = actionLinkNode.InnerHtml;
-                //var publishTime = publishTimeNode.Text.TrimStart('(').TrimEnd(',');
                 list.Add(new News()
                 {
                     NewsId = newsId,
