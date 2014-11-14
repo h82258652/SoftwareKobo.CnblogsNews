@@ -151,7 +151,7 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
         {
             if (NetworkService.IsNetworkAvailable() == false)
             {
-                await new MessageDialog("请检查网络连接。").ShowAsync();
+                await new DialogService().ShowError("请检查网络连接。", "错误", "关闭", null);
                 return;
             }
             this.IsLoading = true;
@@ -185,7 +185,7 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
                 }
                 else
                 {
-                    await new MessageDialog("请输入大于 0，小于等于 100 的整数。").ShowAsync();
+                    await new DialogService().ShowMessageBox("请输入大于 0，小于等于 100 的整数。", "页码错误");
                 }
             }
         }
