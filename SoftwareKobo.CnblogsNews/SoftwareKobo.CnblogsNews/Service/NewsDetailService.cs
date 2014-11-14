@@ -47,11 +47,11 @@ namespace SoftwareKobo.CnblogsNews.Service
             var tfootNode = node.ChildNodes.FirstOrDefault(temp => temp.NodeName == "tfoot");
             if (theadNode != null)
             {
-                await new MessageDialog("thead", "unknow html tag under table").ShowAsync();
+                await new DialogService().ShowMessageBox("thead","unknow html tag under table");
             }
             if (tfootNode != null)
             {
-                await new MessageDialog("tfoot", "unkonw html tag under table").ShowAsync();
+                await new DialogService().ShowMessageBox("tfoot", "unknow html tag under table");
             }
 
             if (tbodyNode == null)
