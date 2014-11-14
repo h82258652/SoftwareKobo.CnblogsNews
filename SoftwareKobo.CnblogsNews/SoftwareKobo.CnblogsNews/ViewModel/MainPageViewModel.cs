@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using GalaSoft.MvvmLight.Views;
 using SoftwareKobo.CnblogsNews.Model;
 using SoftwareKobo.CnblogsNews.Service;
 using System;
@@ -165,9 +166,9 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
             {
                 exception = ex;
             }
-            if (exception!=null)
+            if (exception != null)
             {
-                await new MessageDialog(exception.Message, "错误").ShowAsync();
+                await new DialogService().ShowError(exception, "错误", "关闭", null);
             }
             this.IsLoading = false;
         }

@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.Web.Http;
+using GalaSoft.MvvmLight.Views;
 
 namespace SoftwareKobo.CnblogsNews.Service
 {
@@ -192,7 +193,7 @@ namespace SoftwareKobo.CnblogsNews.Service
                         }
                         else
                         {
-                            await new MessageDialog(olChildNode.NodeName, "unknow html tag under ol").ShowAsync();
+                            await new DialogService().ShowMessageBox(olChildNode.NodeName, "unknow html tag under ol.");
                             Debugger.Break();
                         }
                     }
