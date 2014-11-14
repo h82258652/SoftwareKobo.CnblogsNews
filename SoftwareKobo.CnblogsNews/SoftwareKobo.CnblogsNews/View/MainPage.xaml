@@ -40,8 +40,8 @@
         <Grid x:Name="GdLayout"
               Margin="0,-26.667,0,0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="26.667"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="26.667"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <StackPanel x:Name="SpPage"
                         Grid.Row="0"

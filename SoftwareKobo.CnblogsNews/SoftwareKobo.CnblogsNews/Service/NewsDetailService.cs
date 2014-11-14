@@ -1,4 +1,5 @@
-﻿using AngleSharp;
+﻿using System.Linq;
+using AngleSharp;
 using AngleSharp.DOM;
 using System;
 using System.Diagnostics;
@@ -34,6 +35,71 @@ namespace SoftwareKobo.CnblogsNews.Service
         public static IDocument ParseHtmlToDocument(string html)
         {
             return DocumentBuilder.Html(html);
+        }
+
+        public async static void RenderTable(StackPanel panel, INode node)
+        {
+            // TODO thead、tfoot 以后遇到再处理吧。-_-|||
+            var tbodyNode = node.ChildNodes.FirstOrDefault(temp => temp.NodeName == "tbody");
+
+            var theadNode = node.ChildNodes.FirstOrDefault(temp => temp.NodeName == "thead");
+            var tfootNode = node.ChildNodes.FirstOrDefault(temp => temp.NodeName == "tfoot");
+            if (theadNode != null)
+            {
+                await new MessageDialog("thead", "unknow html tag under table").ShowAsync();
+            }
+            if (tfootNode != null)
+            {
+                await new MessageDialog("tfoot", "unkonw html tag under table").ShowAsync();
+            }
+
+            if (tbodyNode == null)
+            {
+                tbodyNode = node;
+            }
+            var tr = (from temp in tbodyNode.ChildNodes
+                      where temp.NodeName == "tr"
+                      select temp).ToList();
+            int row = tr.Count();
+            int column = (from temp in tr
+                          select temp.ChildNodes.Count(temp2 => temp2.NodeName == "td")).Max();
+            var table = new Grid();
+            table.RowDefinitions.Clear();
+            for (int i = 0; i < row; i++)
+            {
+                table.RowDefinitions.Add(new RowDefinition());
+            }
+            table.ColumnDefinitions.Clear();
+            for (int i = 0; i < column; i++)
+            {
+                table.ColumnDefinitions.Add(new ColumnDefinition());
+            }
+            for (int i = 0; i < row; i++)
+            {
+                var trNode = tr[i];
+                for (int j = 0; j < column; j++)
+                {
+                    var tdNode = trNode.ChildNodes.Where(temp => temp.NodeName == "td").ElementAt(j);
+
+                    var border = new Border()
+                    {
+                        BorderThickness = new Thickness(1),
+                        BorderBrush = new SolidColorBrush(Colors.Gray),
+                        Padding = new Thickness(5, 0, 5, 0)
+                    };
+                    var innerPanel = new StackPanel();
+                    border.Child = innerPanel;
+                    var textBuffer = new StringBuilder();
+                    RenderNode(tdNode, innerPanel, textBuffer);
+                    RenderText(innerPanel, textBuffer);
+
+                    Grid.SetRow(border, i);
+                    Grid.SetColumn(border, j);
+
+                    table.Children.Add(border);
+                }
+            }
+            panel.Children.Add(table);
         }
 
         public static void RenderBorder(StackPanel panel, INode node, StringBuilder textBuffer)
@@ -158,6 +224,10 @@ namespace SoftwareKobo.CnblogsNews.Service
                 else if (childNode.NodeName == "center")
                 {
                     RenderNode(childNode, panel);
+                }
+                else if (childNode.NodeName == "table")
+                {
+                    RenderTable(panel, childNode);
                 }
                 else if (childNode.NodeType == NodeType.Text)
                 {
