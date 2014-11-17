@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Net;
+using System.Text.RegularExpressions;
 using Windows.Web.Http.Filters;
 using AngleSharp;
 using AngleSharp.DOM;
@@ -77,7 +78,7 @@ namespace SoftwareKobo.CnblogsNews.Service
                 }
 
                 var newsId = newsIdGroup.Value;
-                var title = actionLinkNode.InnerHtml;
+                var title = WebUtility.HtmlDecode(actionLinkNode.InnerHtml);
                 var publishTime = publishTimeNode.Text.TrimStart('(').TrimEnd(',');
 
                 list.Add(new News()

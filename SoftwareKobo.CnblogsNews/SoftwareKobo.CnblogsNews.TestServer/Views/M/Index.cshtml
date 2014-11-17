@@ -16,7 +16,7 @@
     @{
         foreach (var news in Model)
         {
-            <div class="list_item"><a href="/m/n/@news.Id">@news.Title</a>(@news.PublishTime,<a href="/mc?id=@news.Id">@news.CommentCount</a>/xxx,小于1K</div>
+            <div class="list_item"><a href="/m/n/@news.Id">&amp;@news.Title</a>(@news.PublishTime,<a href="/mc?id=@news.Id">@news.CommentCount</a>/xxx,小于1K</div>
         }
     }
     
