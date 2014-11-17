@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Views;
 using SoftwareKobo.CnblogsNews.Model;
 using SoftwareKobo.CnblogsNews.Service;
 using System;
@@ -56,7 +57,7 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
         {
             if (NetworkService.IsNetworkAvailable() == false)
             {
-                await new MessageDialog("请检查网络连接。").ShowAsync();
+                await new DialogService().ShowMessageBox("请检查网络连接。", "错误");
                 return;
             }
             this.IsLoading = true;
@@ -74,7 +75,7 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
             }
             if (exception != null)
             {
-                await new MessageDialog(exception.Message, "错误").ShowAsync();
+                await new DialogService().ShowError(exception, "错误", "关闭", null);
             }
             this.IsLoading = false;
         }

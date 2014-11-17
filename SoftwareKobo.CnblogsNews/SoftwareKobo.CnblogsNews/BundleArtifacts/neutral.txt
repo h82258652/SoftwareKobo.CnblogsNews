@@ -1,4 +1,4 @@
-MainPackage=E:\Projects\CnblogsNews\SoftwareKobo.CnblogsNews\SoftwareKobo.CnblogsNews\bin\Release\SoftwareKobo.CnblogsNews_1.1.0.7_Bundle\SoftwareKobo.CnblogsNews_1.1.0.7_AnyCPU.appx
-SymbolPackage=E:\Projects\CnblogsNews\SoftwareKobo.CnblogsNews\SoftwareKobo.CnblogsNews\AppPackages\SoftwareKobo.CnblogsNews_1.1.0.7_Test\SoftwareKobo.CnblogsNews_1.1.0.7_AnyCPU.appxsym
-ResourcePack=E:\Projects\CnblogsNews\SoftwareKobo.CnblogsNews\SoftwareKobo.CnblogsNews\bin\Release\SoftwareKobo.CnblogsNews_1.1.0.7_Bundle\SoftwareKobo.CnblogsNews_1.1.0.7_language-zh-hans.appx
-ResourcePack=E:\Projects\CnblogsNews\SoftwareKobo.CnblogsNews\SoftwareKobo.CnblogsNews\bin\Release\SoftwareKobo.CnblogsNews_1.1.0.7_Bundle\SoftwareKobo.CnblogsNews_1.1.0.7_scale-100.appx
+MainPackage=E:\Projects\CnblogsNews\SoftwareKobo.CnblogsNews\SoftwareKobo.CnblogsNews\bin\Release\SoftwareKobo.CnblogsNews_1.1.0.8_Bundle\SoftwareKobo.CnblogsNews_1.1.0.8_AnyCPU.appx
+SymbolPackage=E:\Projects\CnblogsNews\SoftwareKobo.CnblogsNews\SoftwareKobo.CnblogsNews\AppPackages\SoftwareKobo.CnblogsNews_1.1.0.8_Test\SoftwareKobo.CnblogsNews_1.1.0.8_AnyCPU.appxsym
+ResourcePack=E:\Projects\CnblogsNews\SoftwareKobo.CnblogsNews\SoftwareKobo.CnblogsNews\bin\Release\SoftwareKobo.CnblogsNews_1.1.0.8_Bundle\SoftwareKobo.CnblogsNews_1.1.0.8_language-zh-hans.appx
+ResourcePack=E:\Projects\CnblogsNews\SoftwareKobo.CnblogsNews\SoftwareKobo.CnblogsNews\bin\Release\SoftwareKobo.CnblogsNews_1.1.0.8_Bundle\SoftwareKobo.CnblogsNews_1.1.0.8_scale-100.appx
