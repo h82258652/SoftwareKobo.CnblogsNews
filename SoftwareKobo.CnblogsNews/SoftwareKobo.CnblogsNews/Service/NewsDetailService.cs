@@ -1,19 +1,18 @@
-﻿using System.Linq;
-using AngleSharp;
+﻿using AngleSharp;
 using AngleSharp.DOM;
+using GalaSoft.MvvmLight.Views;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI;
-using Windows.UI.Popups;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.Web.Http;
-using GalaSoft.MvvmLight.Views;
 
 namespace SoftwareKobo.CnblogsNews.Service
 {
@@ -237,6 +236,18 @@ namespace SoftwareKobo.CnblogsNews.Service
                 else if (childNode.NodeName == "table")
                 {
                     RenderTable(panel, childNode);
+                }
+                else if (childNode.NodeName == "hr")
+                {
+                    RenderText(panel, textBuffer);
+                    var border = new Border()
+                    {
+                        MinWidth = double.MaxValue,
+                        Height = 1,
+                        Background = new SolidColorBrush(Colors.Gray),
+                        Margin = new Thickness(0, 5, 0, 5)
+                    };
+                    panel.Children.Add(border);
                 }
                 else if (childNode.NodeType == NodeType.Text)
                 {

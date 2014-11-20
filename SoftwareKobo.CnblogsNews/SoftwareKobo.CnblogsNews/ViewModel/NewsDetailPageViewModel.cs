@@ -3,7 +3,6 @@ using GalaSoft.MvvmLight.Views;
 using SoftwareKobo.CnblogsNews.Model;
 using SoftwareKobo.CnblogsNews.Service;
 using System;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
 
 namespace SoftwareKobo.CnblogsNews.ViewModel
