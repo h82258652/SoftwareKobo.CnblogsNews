@@ -249,6 +249,15 @@ namespace SoftwareKobo.CnblogsNews.Service
                     };
                     panel.Children.Add(border);
                 }
+                else if (childNode.NodeName == "h1"
+                    || childNode.NodeName == "h2"
+                    || childNode.NodeName == "h3"
+                    || childNode.NodeName == "h4"
+                    || childNode.NodeName == "h5"
+                    || childNode.NodeName == "h6")
+                {
+                    RenderNode(childNode, panel, textBuffer);
+                }
                 else if (childNode.NodeType == NodeType.Text)
                 {
                     textBuffer.Append(childNode.TextContent);
