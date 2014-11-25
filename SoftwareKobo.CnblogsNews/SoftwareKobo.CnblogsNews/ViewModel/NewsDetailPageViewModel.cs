@@ -4,6 +4,8 @@ using SoftwareKobo.CnblogsNews.Model;
 using SoftwareKobo.CnblogsNews.Service;
 using System;
 using Windows.UI.Xaml;
+using News = SoftwareKobo.CnblogsAPI.Model.News;
+using NewsService = SoftwareKobo.CnblogsAPI.Service.NewsService;
 
 namespace SoftwareKobo.CnblogsNews.ViewModel
 {
@@ -63,9 +65,11 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
             Exception exception = null;
             try
             {
-                var html = await NewsDetailService.DownloadNewsDetailHtml(news.DetailLink);
+                var newsDetail = await NewsService.DetailAsync(news.Id);
+                var html = newsDetail.Content;
                 var document = NewsDetailService.ParseHtmlToDocument(html);
-                this.Title = NewsDetailService.GetTitle(document);
+
+                this.Title = newsDetail.Title;
                 this.NewsDetail = NewsDetailService.RenderNewsDetail(document);
             }
             catch (Exception ex)

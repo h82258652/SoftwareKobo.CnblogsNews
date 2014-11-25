@@ -7,6 +7,7 @@ using Windows.Graphics.Display;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using News = SoftwareKobo.CnblogsAPI.Model.News;
 
 namespace SoftwareKobo.CnblogsNews.View
 {
@@ -22,7 +23,7 @@ namespace SoftwareKobo.CnblogsNews.View
             this.NavigationCacheMode = NavigationCacheMode.Required;
         }
 
-        public void NavigateToNewsDetail(News news)
+        public void NavigateToNewsDetail(CnblogsAPI.Model.News news)
         {
             if (news != null)
             {
@@ -119,7 +120,7 @@ namespace SoftwareKobo.CnblogsNews.View
 
             RenderLayoutWithOrientation(DisplayInformation.GetForCurrentView().CurrentOrientation);
 
-            Messenger.Default.Register<News>(this, NavigateToNewsDetail);
+            Messenger.Default.Register<CnblogsAPI.Model.News>(this, NavigateToNewsDetail);
 
             Messenger.Default.Register<string>(this, ProcessMessageFromViewModel);
 

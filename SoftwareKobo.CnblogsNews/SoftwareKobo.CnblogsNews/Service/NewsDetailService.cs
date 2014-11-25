@@ -130,7 +130,8 @@ namespace SoftwareKobo.CnblogsNews.Service
 
         public static UIElement RenderNewsDetail(IDocument document)
         {
-            var newsDetailNode = document.QuerySelector(@"div[style=""line-height:1.6;""]");
+            var newsDetailNode = document.Body;
+            // var newsDetailNode = document.QuerySelector(@"div[style=""line-height:1.6;""]");
             var panel = new StackPanel()
             {
                 Margin = new Thickness(20, 0, 20, 10)
@@ -257,6 +258,11 @@ namespace SoftwareKobo.CnblogsNews.Service
                     || childNode.NodeName == "h6")
                 {
                     RenderNode(childNode, panel, textBuffer);
+                }
+                else if (childNode.NodeName == "img")
+                {
+                    var src = ((IElement)childNode).GetAttribute("src");
+                    RenderImage(panel, new Uri(src, UriKind.Absolute));
                 }
                 else if (childNode.NodeType == NodeType.Text)
                 {

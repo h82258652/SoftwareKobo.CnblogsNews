@@ -4,6 +4,7 @@ using SoftwareKobo.CnblogsNews.ViewModel;
 using Windows.Phone.UI.Input;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using News = SoftwareKobo.CnblogsAPI.Model.News;
 
 namespace SoftwareKobo.CnblogsNews.View
 {

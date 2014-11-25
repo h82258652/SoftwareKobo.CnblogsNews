@@ -15,6 +15,7 @@
         <vm:MainPageViewModel></vm:MainPageViewModel>
     </Page.DataContext>
     <Page.Resources>
+        <converter:PublishedConverter x:Key="PublishedConverter"></converter:PublishedConverter>
         <converter:VisibilityConverter x:Key="VisibilityConverter"></converter:VisibilityConverter>
     </Page.Resources>
     <Page.BottomAppBar>
@@ -64,7 +65,7 @@
                         <StackPanel Margin="20,0,20,10">
                             <TextBlock Text="{Binding Path=Title}"
                                        Style="{StaticResource NewsItemTitleStyle}" />
-                            <TextBlock Text="{Binding Path=PublishTime}"
+                            <TextBlock Text="{Binding Path=Published,Converter={StaticResource PublishedConverter}}"
                                        Style="{StaticResource NewsItemPublishTimeStyle}" />
                         </StackPanel>
                     </DataTemplate>
