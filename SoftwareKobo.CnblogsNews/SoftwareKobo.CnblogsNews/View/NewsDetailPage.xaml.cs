@@ -1,5 +1,6 @@
 ﻿// “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
 using SoftwareKobo.CnblogsNews.Model;
+using SoftwareKobo.CnblogsNews.Service;
 using SoftwareKobo.CnblogsNews.ViewModel;
 using Windows.Phone.UI.Input;
 using Windows.UI.Xaml.Controls;
