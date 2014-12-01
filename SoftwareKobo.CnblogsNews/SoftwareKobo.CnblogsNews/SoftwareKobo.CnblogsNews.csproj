@@ -190,6 +190,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\SoftwareKobo.CnblogsAPI.1.0.3\lib\SoftwareKobo.CnblogsAPI.dll</HintPath>
     </Reference>
+    <Reference Include="SoftwareKobo.HtmlRender.Core">
+      <HintPath>..\packages\SoftwareKobo.HtmlRender.WinRT.1.0.0\lib\wpa81\SoftwareKobo.HtmlRender.Core.dll</HintPath>
+    </Reference>
     <Reference Include="SoftwareKobo.Net.WebUtility">
       <HintPath>..\packages\SoftwareKobo.Net.WebUtility.1.0.2\lib\SoftwareKobo.Net.WebUtility.dll</HintPath>
     </Reference>
