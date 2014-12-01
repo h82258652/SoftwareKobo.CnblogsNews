@@ -1,9 +1,11 @@
-﻿using GalaSoft.MvvmLight;
+﻿using Windows.UI.Xaml.Controls;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Views;
 using SoftwareKobo.CnblogsNews.Model;
 using SoftwareKobo.CnblogsNews.Service;
 using System;
 using Windows.UI.Xaml;
+using SoftwareKobo.HtmlRender.Core;
 using News = SoftwareKobo.CnblogsAPI.Model.News;
 using NewsService = SoftwareKobo.CnblogsAPI.Service.NewsService;
 
@@ -53,7 +55,7 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
                 RaisePropertyChanged(() => Title);
             }
         }
-
+        
         public async void Render(News news)
         {
             if (NetworkService.IsNetworkAvailable() == false)
@@ -66,11 +68,16 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
             try
             {
                 var newsDetail = await NewsService.DetailAsync(news.Id);
-                var html = newsDetail.Content;
-                var document = NewsDetailService.ParseHtmlToDocument(html);
-
                 this.Title = newsDetail.Title;
-                this.NewsDetail = NewsDetailService.RenderNewsDetail(document);
+                var richTextBlock = new RichTextBlock()
+                {
+                    FontSize = 16,
+                    Margin = new Thickness(20, 0, 20, 10),
+                    IsTextSelectionEnabled = false
+                };
+                var context = new RenderContextBase(newsDetail.Content);
+                context.Render(richTextBlock);
+                this.NewsDetail = richTextBlock;
             }
             catch (Exception ex)
             {
