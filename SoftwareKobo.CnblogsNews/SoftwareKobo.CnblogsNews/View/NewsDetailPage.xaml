@@ -14,6 +14,17 @@
     <Page.Resources>
         <converter:VisibilityConverter x:Key="VisibilityConverter"></converter:VisibilityConverter>
     </Page.Resources>
+    <Page.BottomAppBar>
+        <CommandBar x:Name="CmdBar"
+                    Visibility="Collapsed"
+                    ClosedDisplayMode="Minimal">
+            <AppBarButton Icon="Comment"
+                          Label="查看评论"
+                          Command="{Binding ViewCommentsCommand}"
+                          CommandParameter="{Binding News}">
+            </AppBarButton>
+        </CommandBar>
+    </Page.BottomAppBar>
     <Grid>
         <Grid>
             <Grid.RowDefinitions>

@@ -1,11 +1,13 @@
-﻿using Windows.UI.Xaml.Controls;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
-using SoftwareKobo.CnblogsNews.Model;
 using SoftwareKobo.CnblogsNews.Service;
-using System;
-using Windows.UI.Xaml;
 using SoftwareKobo.HtmlRender.Core;
+using System;
+using System.Windows.Input;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using News = SoftwareKobo.CnblogsAPI.Model.News;
 using NewsService = SoftwareKobo.CnblogsAPI.Service.NewsService;
 
@@ -16,6 +18,7 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
         private bool _isLoading;
         private UIElement _newsDetail;
         private string _title;
+        private News _news;
 
         public bool IsLoading
         {
@@ -55,7 +58,45 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
                 RaisePropertyChanged(() => Title);
             }
         }
-        
+
+        public News News
+        {
+            get
+            {
+                return _news;
+            }
+            set
+            {
+                _news = value;
+                RaisePropertyChanged(() => News);
+            }
+        }
+
+        public ICommand ViewCommentsCommand
+        {
+            get
+            {
+                return new RelayCommand<News>(ViewCommentsCommandExecute);
+            }
+        }
+
+        public async void ViewCommentsCommandExecute(News news)
+        {
+            if (news == null)
+            {
+                throw new ArgumentNullException("news");
+            }
+            var commentCount = news.Comments;
+            if (commentCount <= 0)
+            {
+                await new DialogService().ShowMessageBox("该新闻暂时还没有评论。", string.Empty);
+            }
+            else
+            {
+                Messenger.Default.Send<Tuple<string, News>>(new Tuple<string, News>("comment", news));
+            }
+        }
+
         public async void Render(News news)
         {
             if (NetworkService.IsNetworkAvailable() == false)

@@ -1,8 +1,10 @@
 ﻿// “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
-using SoftwareKobo.CnblogsNews.Model;
-using SoftwareKobo.CnblogsNews.Service;
+
+using GalaSoft.MvvmLight.Messaging;
 using SoftwareKobo.CnblogsNews.ViewModel;
+using System;
 using Windows.Phone.UI.Input;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using News = SoftwareKobo.CnblogsAPI.Model.News;
@@ -23,6 +25,8 @@ namespace SoftwareKobo.CnblogsNews.View
         {
             HardwareButtons.BackPressed -= HardwareButtons_BackPressed;
 
+            Messenger.Default.Unregister<Tuple<string, News>>(this, ProcessMessageFromViewModel);
+
             base.OnNavigatedFrom(e);
         }
 
@@ -39,10 +43,39 @@ namespace SoftwareKobo.CnblogsNews.View
             var vm = this.DataContext as NewsDetailPageViewModel;
             if (news != null && vm != null)
             {
+                vm.News = news;
                 vm.Render(news);
+                if (news.Comments > 0)
+                {
+                    CmdBar.Visibility = Visibility.Visible;
+                }
             }
 
+            Messenger.Default.Register<Tuple<string, News>>(this, ProcessMessageFromViewModel);
+
             base.OnNavigatedTo(e);
+        }
+
+        public void ProcessMessageFromViewModel(Tuple<string, News> tuple)
+        {
+            if (tuple == null)
+            {
+                throw new ArgumentNullException("tuple");
+            }
+            var message = tuple.Item1;
+            var news = tuple.Item2;
+            if (message == null || news == null)
+            {
+                throw new ArgumentException("tuple 元素存在空。", "tuple");
+            }
+            if (message == "detail")
+            {
+                Frame.Navigate(typeof(NewsDetailPage), news);
+            }
+            else if (message == "comment")
+            {
+                Frame.Navigate(typeof(CommentPage), news);
+            }
         }
 
         private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)

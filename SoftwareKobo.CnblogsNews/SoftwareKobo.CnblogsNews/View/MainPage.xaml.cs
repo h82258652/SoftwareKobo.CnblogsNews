@@ -1,11 +1,13 @@
 ﻿// “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=391641 上有介绍
 
 using GalaSoft.MvvmLight.Messaging;
-using SoftwareKobo.CnblogsNews.Model;
+using System;
 using System.Linq;
 using Windows.Graphics.Display;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using News = SoftwareKobo.CnblogsAPI.Model.News;
 
@@ -23,14 +25,6 @@ namespace SoftwareKobo.CnblogsNews.View
             this.NavigationCacheMode = NavigationCacheMode.Required;
         }
 
-        public void NavigateToNewsDetail(CnblogsAPI.Model.News news)
-        {
-            if (news != null)
-            {
-                Frame.Navigate(typeof(NewsDetailPage), news);
-            }
-        }
-
         public void ProcessMessageFromViewModel(string message)
         {
             if (message == "about")
@@ -40,6 +34,28 @@ namespace SoftwareKobo.CnblogsNews.View
             else if (message == "scrolltop")
             {
                 LvwNews.ScrollIntoView(LvwNews.Items.FirstOrDefault());
+            }
+        }
+
+        public void ProcessMessageFromViewModel(Tuple<string, News> tuple)
+        {
+            if (tuple == null)
+            {
+                throw new ArgumentNullException("tuple");
+            }
+            var message = tuple.Item1;
+            var news = tuple.Item2;
+            if (message == null || news == null)
+            {
+                throw new ArgumentException("tuple 元素存在空。", "tuple");
+            }
+            if (message == "detail")
+            {
+                Frame.Navigate(typeof(NewsDetailPage), news);
+            }
+            else if (message == "comment")
+            {
+                Frame.Navigate(typeof(CommentPage), news);
             }
         }
 
@@ -102,7 +118,7 @@ namespace SoftwareKobo.CnblogsNews.View
         {
             DisplayInformation.GetForCurrentView().OrientationChanged -= OrientationChanged;
 
-            Messenger.Default.Unregister<News>(this, NavigateToNewsDetail);
+            Messenger.Default.Unregister<Tuple<string, News>>(this, ProcessMessageFromViewModel);
 
             Messenger.Default.Unregister<string>(this, ProcessMessageFromViewModel);
 
@@ -120,7 +136,7 @@ namespace SoftwareKobo.CnblogsNews.View
 
             RenderLayoutWithOrientation(DisplayInformation.GetForCurrentView().CurrentOrientation);
 
-            Messenger.Default.Register<CnblogsAPI.Model.News>(this, NavigateToNewsDetail);
+            Messenger.Default.Register<Tuple<string, News>>(this, ProcessMessageFromViewModel);
 
             Messenger.Default.Register<string>(this, ProcessMessageFromViewModel);
 
@@ -130,6 +146,11 @@ namespace SoftwareKobo.CnblogsNews.View
         private void OrientationChanged(DisplayInformation sender, object args)
         {
             RenderLayoutWithOrientation(sender.CurrentOrientation);
+        }
+
+        private void News_OnHolding(object sender, HoldingRoutedEventArgs e)
+        {
+            FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
         }
     }
 }

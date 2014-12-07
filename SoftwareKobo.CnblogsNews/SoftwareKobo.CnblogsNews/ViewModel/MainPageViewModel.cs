@@ -7,7 +7,6 @@ using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
 using News = SoftwareKobo.CnblogsAPI.Model.News;
 
@@ -93,6 +92,31 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
             }
         }
 
+        public ICommand ViewCommentsCommand
+        {
+            get
+            {
+                return new RelayCommand<News>(ViewCommentsCommandExecute);
+            }
+        }
+
+        public async void ViewCommentsCommandExecute(News news)
+        {
+            if (news == null)
+            {
+                throw new ArgumentNullException("news");
+            }
+            var commentCount = news.Comments;
+            if (commentCount <= 0)
+            {
+                await new DialogService().ShowMessageBox("该新闻暂时还没有评论。", string.Empty);
+            }
+            else
+            {
+                Messenger.Default.Send<Tuple<string, News>>(new Tuple<string, News>("comment", news));
+            }
+        }
+
         public ObservableCollection<CnblogsAPI.Model.News> NewsItems
         {
             get
@@ -159,7 +183,6 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
             try
             {
                 var news = new ObservableCollection<CnblogsAPI.Model.News>(await CnblogsAPI.Service.NewsService.RecentAsync(CurrentPage, 15));
-                // var news = await NewsService.DownloadNews(CurrentPage);
                 ScrollView();
                 this.NewsItems = news;
             }
@@ -202,7 +225,7 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
             {
                 return;
             }
-            Messenger.Default.Send<News>(news);
+            Messenger.Default.Send<Tuple<string, News>>(new Tuple<string, News>("detail", news));
         }
 
         public async void OnCreated()

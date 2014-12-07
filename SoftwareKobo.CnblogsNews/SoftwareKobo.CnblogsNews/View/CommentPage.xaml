@@ -1,14 +1,56 @@
-﻿<Page
-    x:Class="SoftwareKobo.CnblogsNews.View.CommentPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:SoftwareKobo.CnblogsNews.View"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+﻿<Page x:Class="SoftwareKobo.CnblogsNews.View.CommentPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:SoftwareKobo.CnblogsNews.View"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:core="using:SoftwareKobo.HtmlRender.Core"
+      xmlns:converter="using:SoftwareKobo.CnblogsNews.Converter"
+      mc:Ignorable="d"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <converter:PublishedConverter x:Key="PublishedConverter"></converter:PublishedConverter>
+    </Page.Resources>
     <Grid>
-
+        <ListView x:Name="Lv">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="20,0,20,10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontSize="16"
+                                       VerticalAlignment="Center">
+                                <Run Text="{Binding Path=Index}" />
+                                <Run Text="楼" />
+                            </TextBlock>
+                            <TextBlock Text="{Binding Path=Comment.Author.Name}"
+                                       FontSize="18"
+                                       FontWeight="Bold"
+                                       Margin="5,0,0,0"
+                                       VerticalAlignment="Center" />
+                            <TextBlock Text="{Binding Path=Comment.Published,Converter={StaticResource PublishedConverter}}"
+                                       FontSize="16"
+                                       Margin="5,0,0,0"
+                                       Foreground="Gray"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                        <RichTextBlock Grid.Row="1"
+                                       core:HtmlRenderHelper.Html="{Binding Path=Comment.Content}"
+                                       FontSize="16"
+                                       IsTextSelectionEnabled="False" />
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+        </ListView>
+        <ProgressBar x:Name="Pb"
+                     IsIndeterminate="True" />
     </Grid>
 </Page>

@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+﻿// “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
 
-// “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
+using System.Linq;
+using Windows.UI.Xaml;
+using SoftwareKobo.CnblogsAPI.Extension;
+using SoftwareKobo.CnblogsAPI.Model;
+using Windows.Phone.UI.Input;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace SoftwareKobo.CnblogsNews.View
 {
@@ -27,6 +20,13 @@ namespace SoftwareKobo.CnblogsNews.View
             this.InitializeComponent();
         }
 
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            HardwareButtons.BackPressed -= HardwareButtons_BackPressed;
+
+            base.OnNavigatedFrom(e);
+        }
+
         /// <summary>
         /// 在此页将要在 Frame 中显示时进行调用。
         /// </summary>
@@ -34,6 +34,40 @@ namespace SoftwareKobo.CnblogsNews.View
         /// 此参数通常用于配置页。</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            HardwareButtons.BackPressed += HardwareButtons_BackPressed;
+
+            LoadComments(e.Parameter as News);
+
+            base.OnNavigatedTo(e);
+        }
+
+        private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)
+        {
+            if (Frame.CanGoBack)
+            {
+                Frame.GoBack();
+                e.Handled = true;
+            }
+        }
+
+        public async void LoadComments(News news)
+        {
+            Pb.Visibility = Visibility.Visible;
+
+            if (news != null)
+            {
+                var comments = await news.CommentAsync();
+                var index = 0;
+                var commentsWithIndex = from temp in comments
+                    select new
+                    {
+                        Index=++index,
+                        Comment=temp
+                    };
+                Lv.ItemsSource = commentsWithIndex;
+            }
+
+            Pb.Visibility = Visibility.Collapsed;
         }
     }
 }

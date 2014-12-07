@@ -18,6 +18,8 @@
     <Style x:Name="NewsItemPublishTimeStyle"
            TargetType="TextBlock"
            BasedOn="{StaticResource ListViewItemSubheaderTextBlockStyle}">
+        <Setter Property="FontSize"
+                Value="20"/>
     </Style>
     <Style x:Name="NewsDetailTitleStyle"
            TargetType="TextBlock">
