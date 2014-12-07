@@ -31,9 +31,9 @@
                           Command="{Binding Path=ForwardCommand}" />
             <CommandBar.SecondaryCommands>
                 <AppBarButton Label="转到...页"
-                              Command="{Binding Path=JumpPageCommand}"/>
+                              Command="{Binding Path=JumpPageCommand}" />
                 <AppBarButton Label="关于"
-                              Command="{Binding Path=AboutCommand}"/>
+                              Command="{Binding Path=AboutCommand}" />
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
@@ -41,8 +41,8 @@
         <Grid x:Name="GdLayout"
               Margin="0,-26.667,0,0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="26.667"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="26.667" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <StackPanel x:Name="SpPage"
                         Grid.Row="0"
@@ -70,6 +70,12 @@
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment"
+                                Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel />
