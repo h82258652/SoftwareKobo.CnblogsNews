@@ -95,6 +95,7 @@
       <DependentUpon>JumpPageDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\News.cs" />
+    <Compile Include="Service\ExceptionSenderService.cs" />
     <Compile Include="Service\JumpPageService.cs" />
     <Compile Include="Service\NetworkService.cs" />
     <Compile Include="Service\NewsCommentService.cs" />

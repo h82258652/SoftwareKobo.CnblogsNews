@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
-using News = SoftwareKobo.CnblogsAPI.Model.News;
+using SoftwareKobo.CnblogsAPI.Model;
 
 namespace SoftwareKobo.CnblogsNews.View
 {

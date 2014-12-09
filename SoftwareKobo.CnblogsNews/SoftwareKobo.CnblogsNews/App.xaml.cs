@@ -1,6 +1,7 @@
 ﻿// “空白应用程序”模板在 http://go.microsoft.com/fwlink/?LinkId=391641 上有介绍
 
 using GalaSoft.MvvmLight.Views;
+using SoftwareKobo.CnblogsNews.Service;
 using SoftwareKobo.CnblogsNews.View;
 using System;
 using Windows.ApplicationModel;
@@ -112,6 +113,7 @@ namespace SoftwareKobo.CnblogsNews
 
         private async void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
+            await ExceptionSenderService.SendExceptionToMyServer(e.Exception);
             await new DialogService().ShowError(e.Exception, "错误", "关闭", null);
         }
 
