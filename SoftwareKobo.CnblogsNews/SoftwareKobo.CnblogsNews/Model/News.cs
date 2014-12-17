@@ -25,22 +25,6 @@ namespace SoftwareKobo.CnblogsNews.Model
             }
         }
 
-        public Uri DetailLink
-        {
-            get
-            {
-                return new Uri(new Uri(NewsService.NewsBaseUrl, UriKind.Absolute), string.Format("/m/n/{0}", this.NewsId));
-            }
-        }
-
-        public Uri CommentLink
-        {
-            get
-            {
-                return new Uri(new Uri(NewsService.NewsBaseUrl, UriKind.Absolute), string.Format("/mc?id={0}", this.NewsId));
-            }
-        }
-
         public string NewsId
         {
             get;
