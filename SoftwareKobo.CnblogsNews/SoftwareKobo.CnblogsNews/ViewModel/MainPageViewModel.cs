@@ -2,13 +2,13 @@
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
+using SoftwareKobo.CnblogsAPI.Model;
 using SoftwareKobo.CnblogsNews.Service;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Xaml.Controls;
-using News = SoftwareKobo.CnblogsAPI.Model.News;
 
 namespace SoftwareKobo.CnblogsNews.ViewModel
 {
@@ -18,7 +18,7 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
 
         private bool _isLoading;
 
-        private ObservableCollection<CnblogsAPI.Model.News> _newsItems;
+        private ObservableCollection<News> _newsItems;
 
         public MainPageViewModel()
         {
@@ -117,7 +117,7 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
             }
         }
 
-        public ObservableCollection<CnblogsAPI.Model.News> NewsItems
+        public ObservableCollection<News> NewsItems
         {
             get
             {
@@ -182,7 +182,7 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
             Exception exception = null;
             try
             {
-                var news = new ObservableCollection<CnblogsAPI.Model.News>(await CnblogsAPI.Service.NewsService.RecentAsync(CurrentPage, 15));
+                var news = new ObservableCollection<News>(await CnblogsAPI.Service.NewsService.RecentAsync(CurrentPage, 15));
                 ScrollView();
                 this.NewsItems = news;
             }
@@ -220,7 +220,7 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
             {
                 return;
             }
-            var news = e.ClickedItem as CnblogsAPI.Model.News;
+            var news = e.ClickedItem as News;
             if (news == null)
             {
                 return;
