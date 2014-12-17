@@ -3,7 +3,6 @@ using System.Text.RegularExpressions;
 using Windows.Web.Http.Filters;
 using AngleSharp;
 using AngleSharp.DOM;
-using SoftwareKobo.CnblogsNews.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
