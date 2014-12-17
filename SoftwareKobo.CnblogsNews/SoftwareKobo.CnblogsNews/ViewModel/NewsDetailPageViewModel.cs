@@ -76,26 +76,26 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
         {
             get
             {
-                return new RelayCommand<News>(ViewCommentsCommandExecute);
+                return new RelayCommand<News>(async (News news) =>
+                {
+                    if (news == null)
+                    {
+                        throw new ArgumentNullException("news");
+                    }
+                    var commentCount = news.Comments;
+                    if (commentCount <= 0)
+                    {
+                        await new DialogService().ShowMessageBox("该新闻暂时还没有评论。", string.Empty);
+                    }
+                    else
+                    {
+                        Messenger.Default.Send<Tuple<string, News>>(new Tuple<string, News>("comment", news));
+                    }
+                });
             }
         }
 
-        public async void ViewCommentsCommandExecute(News news)
-        {
-            if (news == null)
-            {
-                throw new ArgumentNullException("news");
-            }
-            var commentCount = news.Comments;
-            if (commentCount <= 0)
-            {
-                await new DialogService().ShowMessageBox("该新闻暂时还没有评论。", string.Empty);
-            }
-            else
-            {
-                Messenger.Default.Send<Tuple<string, News>>(new Tuple<string, News>("comment", news));
-            }
-        }
+
 
         public async void Render(News news)
         {

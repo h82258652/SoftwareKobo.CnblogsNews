@@ -29,7 +29,7 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
         {
             get
             {
-                return new RelayCommand(AboutCommandExecute);
+                return new RelayCommand(() => Messenger.Default.Send<string>("about"));
             }
         }
 
@@ -37,7 +37,14 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
         {
             get
             {
-                return new RelayCommand(BackCommandExecute, BackCommandCanExecute);
+                return new RelayCommand(async () =>
+                {
+                    if (IsLoading == false)
+                    {
+                        CurrentPage--;
+                        await GetNews();
+                    }
+                }, () => CurrentPage > 1);
             }
         }
 
@@ -59,7 +66,14 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
         {
             get
             {
-                return new RelayCommand(ForwardCommandExecute, ForwardCommandCanExecute);
+                return new RelayCommand(async () =>
+                {
+                    if (IsLoading == false)
+                    {
+                        CurrentPage++;
+                        await GetNews();
+                    }
+                }, () => CurrentPage < 100);
             }
         }
 
@@ -80,7 +94,22 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
         {
             get
             {
-                return new RelayCommand(JumpPageCommandExecute);
+                return new RelayCommand(async () =>
+                {
+                    var page = await JumpPageService.GetPage();
+                    if (page.HasValue)
+                    {
+                        if (page.Value > 0 && page.Value <= 100)
+                        {
+                            CurrentPage = page.Value;
+                            await GetNews();
+                        }
+                        else
+                        {
+                            await new DialogService().ShowMessageBox("请输入大于 0，小于等于 100 的整数。", "页码错误");
+                        }
+                    }
+                });
             }
         }
 
@@ -88,7 +117,19 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
         {
             get
             {
-                return new RelayCommand<ItemClickEventArgs>(NewsItemClickCommandExecute);
+                return new RelayCommand<ItemClickEventArgs>((ItemClickEventArgs e) =>
+                {
+                    if (e == null || e.ClickedItem == null)
+                    {
+                        return;
+                    }
+                    var news = e.ClickedItem as News;
+                    if (news == null)
+                    {
+                        return;
+                    }
+                    Messenger.Default.Send<Tuple<string, News>>(new Tuple<string, News>("detail", news));
+                });
             }
         }
 
@@ -96,24 +137,22 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
         {
             get
             {
-                return new RelayCommand<News>(ViewCommentsCommandExecute);
-            }
-        }
-
-        public async void ViewCommentsCommandExecute(News news)
-        {
-            if (news == null)
-            {
-                throw new ArgumentNullException("news");
-            }
-            var commentCount = news.Comments;
-            if (commentCount <= 0)
-            {
-                await new DialogService().ShowMessageBox("该新闻暂时还没有评论。", string.Empty);
-            }
-            else
-            {
-                Messenger.Default.Send<Tuple<string, News>>(new Tuple<string, News>("comment", news));
+                return new RelayCommand<News>(async (News news) =>
+                {
+                    if (news == null)
+                    {
+                        throw new ArgumentNullException("news");
+                    }
+                    var commentCount = news.Comments;
+                    if (commentCount <= 0)
+                    {
+                        await new DialogService().ShowMessageBox("该新闻暂时还没有评论。", string.Empty);
+                    }
+                    else
+                    {
+                        Messenger.Default.Send<Tuple<string, News>>(new Tuple<string, News>("comment", news));
+                    }
+                });
             }
         }
 
@@ -134,40 +173,13 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
         {
             get
             {
-                return new RelayCommand(RefreshCommandExecute);
-            }
-        }
-
-        public void AboutCommandExecute()
-        {
-            Messenger.Default.Send<string>("about");
-        }
-
-        public bool BackCommandCanExecute()
-        {
-            return CurrentPage > 1;
-        }
-
-        public async void BackCommandExecute()
-        {
-            if (IsLoading == false)
-            {
-                CurrentPage--;
-                await GetNews();
-            }
-        }
-
-        public bool ForwardCommandCanExecute()
-        {
-            return CurrentPage < 100;
-        }
-
-        public async void ForwardCommandExecute()
-        {
-            if (IsLoading == false)
-            {
-                CurrentPage++;
-                await GetNews();
+                return new RelayCommand(async () =>
+                {
+                    if (IsLoading == false)
+                    {
+                        await GetNews();
+                    }
+                });
             }
         }
 
@@ -197,49 +209,12 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
             this.IsLoading = false;
         }
 
-        public async void JumpPageCommandExecute()
-        {
-            var page = await JumpPageService.GetPage();
-            if (page.HasValue)
-            {
-                if (page.Value > 0 && page.Value <= 100)
-                {
-                    CurrentPage = page.Value;
-                    await GetNews();
-                }
-                else
-                {
-                    await new DialogService().ShowMessageBox("请输入大于 0，小于等于 100 的整数。", "页码错误");
-                }
-            }
-        }
 
-        public void NewsItemClickCommandExecute(ItemClickEventArgs e)
-        {
-            if (e == null || e.ClickedItem == null)
-            {
-                return;
-            }
-            var news = e.ClickedItem as News;
-            if (news == null)
-            {
-                return;
-            }
-            Messenger.Default.Send<Tuple<string, News>>(new Tuple<string, News>("detail", news));
-        }
 
         public async void OnCreated()
         {
             CurrentPage = 1;
             await GetNews();
-        }
-
-        public async void RefreshCommandExecute()
-        {
-            if (IsLoading == false)
-            {
-                await GetNews();
-            }
         }
 
         private void ScrollView()
