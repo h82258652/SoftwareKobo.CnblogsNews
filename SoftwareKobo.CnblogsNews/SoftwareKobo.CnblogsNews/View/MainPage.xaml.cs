@@ -33,7 +33,11 @@ namespace SoftwareKobo.CnblogsNews.View
             }
             else if (message == "scrolltop")
             {
-                LvwNews.ScrollIntoView(LvwNews.Items.FirstOrDefault());
+                var item = LvwNews.Items.FirstOrDefault();
+                if (item != null)
+                {
+                    LvwNews.ScrollIntoView(item, ScrollIntoViewAlignment.Leading);
+                }
             }
         }
 
