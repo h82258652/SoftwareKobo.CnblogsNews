@@ -12,7 +12,7 @@
       mc:Ignorable="d"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.DataContext>
-        <vm:MainPageViewModel/>
+        <vm:MainPageViewModel />
     </Page.DataContext>
     <Page.Resources>
         <converter:PublishedConverter x:Key="PublishedConverter"></converter:PublishedConverter>
@@ -62,8 +62,8 @@
                       IsItemClickEnabled="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Margin="20,0,20,10"
-                                    Holding="News_OnHolding">
+                        <StackPanel x:Name="SpNews"
+                                    Margin="20,0,20,10">
                             <TextBlock Text="{Binding Path=Title}"
                                        Style="{StaticResource NewsItemTitleStyle}" />
                             <Grid>
@@ -101,9 +101,15 @@
                                 <MenuFlyout>
                                     <MenuFlyoutItem Text="查看评论"
                                                     Command="{Binding ElementName=LvwNews,Path=DataContext.ViewCommentsCommand}"
-                                                    CommandParameter="{Binding}"/>
+                                                    CommandParameter="{Binding}" />
                                 </MenuFlyout>
                             </FlyoutBase.AttachedFlyout>
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="Holding">
+                                    <core:InvokeCommandAction Command="{Binding ElementName=LvwNews,Path=DataContext.ShowFlyoutCommand}"
+                                                              CommandParameter="{Binding ElementName=SpNews}" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>

@@ -6,8 +6,6 @@ using System.Linq;
 using Windows.Graphics.Display;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using SoftwareKobo.CnblogsAPI.Model;
 
@@ -150,11 +148,6 @@ namespace SoftwareKobo.CnblogsNews.View
         private void OrientationChanged(DisplayInformation sender, object args)
         {
             RenderLayoutWithOrientation(sender.CurrentOrientation);
-        }
-
-        private void News_OnHolding(object sender, HoldingRoutedEventArgs e)
-        {
-            FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
         }
     }
 }
