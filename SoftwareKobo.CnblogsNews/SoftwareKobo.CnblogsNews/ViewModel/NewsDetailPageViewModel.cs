@@ -2,14 +2,14 @@
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
+using SoftwareKobo.CnblogsAPI.Model;
+using SoftwareKobo.CnblogsAPI.Service;
 using SoftwareKobo.CnblogsNews.Service;
 using SoftwareKobo.HtmlRender.Core;
 using System;
 using System.Windows.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using News = SoftwareKobo.CnblogsAPI.Model.News;
-using NewsService = SoftwareKobo.CnblogsAPI.Service.NewsService;
 
 namespace SoftwareKobo.CnblogsNews.ViewModel
 {
