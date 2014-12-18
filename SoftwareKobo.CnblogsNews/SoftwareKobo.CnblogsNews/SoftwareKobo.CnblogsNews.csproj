@@ -190,7 +190,7 @@
     </Reference>
     <Reference Include="SoftwareKobo.HtmlRender.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SoftwareKobo.HtmlRender.WinRT.1.0.5\lib\wpa81\SoftwareKobo.HtmlRender.Core.dll</HintPath>
+      <HintPath>..\packages\SoftwareKobo.HtmlRender.WinRT.1.0.6\lib\wpa81\SoftwareKobo.HtmlRender.Core.dll</HintPath>
     </Reference>
     <Reference Include="SoftwareKobo.Net.WebUtility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
