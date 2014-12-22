@@ -1,5 +1,7 @@
 ﻿// “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=391641 上有介绍
 
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Input;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Linq;
@@ -148,6 +150,15 @@ namespace SoftwareKobo.CnblogsNews.View
         private void OrientationChanged(DisplayInformation sender, object args)
         {
             RenderLayoutWithOrientation(sender.CurrentOrientation);
+        }
+
+        private void News_OnHolding(object sender, HoldingRoutedEventArgs e)
+        {
+            var frameworkElement = sender as FrameworkElement;
+            if (frameworkElement != null)
+            {
+                FlyoutBase.ShowAttachedFlyout(frameworkElement);
+            }
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls.Primitives;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
@@ -10,7 +8,9 @@ using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 
 namespace SoftwareKobo.CnblogsNews.ViewModel
 {
@@ -211,25 +211,18 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
             this.IsLoading = false;
         }
 
-
-
         public async void OnCreated()
         {
-            CurrentPage = 1;
-            await GetNews();
+            if (IsInDesignMode == false)
+            {
+                CurrentPage = 1;
+                await GetNews();
+            }
         }
 
         private void ScrollView()
         {
             Messenger.Default.Send<string>("scrolltop");
-        }
-
-        public ICommand ShowFlyoutCommand
-        {
-            get
-            {
-                return new RelayCommand<FrameworkElement>(FlyoutBase.ShowAttachedFlyout);
-            }
         }
     }
 }

@@ -63,7 +63,8 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel x:Name="SpNews"
-                                    Margin="20,0,20,10">
+                                    Margin="20,0,20,10"
+                                    Holding="News_OnHolding">
                             <TextBlock Text="{Binding Path=Title}"
                                        Style="{StaticResource NewsItemTitleStyle}" />
                             <Grid>
@@ -104,12 +105,6 @@
                                                     CommandParameter="{Binding}" />
                                 </MenuFlyout>
                             </FlyoutBase.AttachedFlyout>
-                            <interactivity:Interaction.Behaviors>
-                                <core:EventTriggerBehavior EventName="Holding">
-                                    <core:InvokeCommandAction Command="{Binding ElementName=LvwNews,Path=DataContext.ShowFlyoutCommand}"
-                                                              CommandParameter="{Binding ElementName=SpNews}" />
-                                </core:EventTriggerBehavior>
-                            </interactivity:Interaction.Behaviors>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
