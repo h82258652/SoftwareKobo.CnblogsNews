@@ -53,6 +53,11 @@ namespace SoftwareKobo.CnblogsNews.View
                 vm.LoadComments();
             }
 
+            if (LocalSettings.LoginCookie==null)
+            {
+                GridSend.Visibility = Visibility.Collapsed;
+            }
+
             base.OnNavigatedTo(e);
         }
 
