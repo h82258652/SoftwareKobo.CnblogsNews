@@ -15,8 +15,7 @@
         <vm:MainPageViewModel />
     </Page.DataContext>
     <Page.Resources>
-        <converter:PublishedConverter x:Key="PublishedConverter"></converter:PublishedConverter>
-        <converter:VisibilityConverter x:Key="VisibilityConverter"></converter:VisibilityConverter>
+        <converter:TimeAgoConverter x:Key="TimeAgoConverter" />
     </Page.Resources>
     <Page.BottomAppBar>
         <CommandBar>
@@ -32,8 +31,10 @@
             <CommandBar.SecondaryCommands>
                 <AppBarButton Label="转到...页"
                               Command="{Binding Path=JumpPageCommand}" />
+                <AppBarButton Label="设置"
+                              Click="BtnSetting_OnClick" />
                 <AppBarButton Label="关于"
-                              Command="{Binding Path=AboutCommand}" />
+                              Click="BtnAbout_OnClick" />
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
@@ -73,7 +74,7 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="{Binding Path=Published,Converter={StaticResource PublishedConverter}}"
+                                <TextBlock Text="{Binding Path=Published,Converter={StaticResource TimeAgoConverter}}"
                                            Style="{StaticResource NewsItemPublishTimeStyle}"
                                            VerticalAlignment="Center" />
                                 <!-- 暂时先不显示推荐数，因为意义不大。-->
@@ -126,7 +127,5 @@
                 </interactivity:Interaction.Behaviors>
             </ListView>
         </Grid>
-        <ProgressBar IsIndeterminate="True"
-                     Visibility="{Binding Path=IsLoading,Converter={StaticResource VisibilityConverter}}" />
     </Grid>
 </Page>

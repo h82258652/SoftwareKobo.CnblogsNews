@@ -6,13 +6,29 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:core="using:SoftwareKobo.HtmlRender.Core"
       xmlns:converter="using:SoftwareKobo.CnblogsNews.Converter"
+      xmlns:viewModel="using:SoftwareKobo.CnblogsNews.ViewModel"
       mc:Ignorable="d"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.DataContext>
+        <viewModel:CommentPageViewModel />
+    </Page.DataContext>
     <Page.Resources>
-        <converter:PublishedConverter x:Key="PublishedConverter"></converter:PublishedConverter>
+        <converter:TimeAgoConverter x:Key="TimeAgoConverter" />
     </Page.Resources>
+    <Page.BottomAppBar>
+        <CommandBar ClosedDisplayMode="Minimal">
+            <AppBarButton Icon="Refresh"
+                          Label="刷新"
+                          Command="{Binding RefreshCommand}" />
+        </CommandBar>
+    </Page.BottomAppBar>
     <Grid>
-        <ListView x:Name="Lv">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ListView x:Name="Lv"
+                  ItemsSource="{Binding CommentsWithIndex}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="20,0,20,10">
@@ -31,7 +47,7 @@
                                        FontWeight="Bold"
                                        Margin="5,0,0,0"
                                        VerticalAlignment="Center" />
-                            <TextBlock Text="{Binding Path=Comment.Published,Converter={StaticResource PublishedConverter}}"
+                            <TextBlock Text="{Binding Path=Comment.Published,Converter={StaticResource TimeAgoConverter}}"
                                        FontSize="16"
                                        Margin="5,0,0,0"
                                        Foreground="Gray"
@@ -50,7 +66,25 @@
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
         </ListView>
-        <ProgressBar x:Name="Pb"
-                     IsIndeterminate="True" />
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBox Margin="0"
+                     x:Name="TxtComment" />
+            <Grid x:Name="BtnSend"
+                  Grid.Column="1"
+                  Width="{Binding ElementName=BtnSend,Path=ActualHeight}"
+                  PointerReleased="BtnSend_OnPointerReleased">
+                <Border BorderBrush="White"
+                        BorderThickness="2.5"></Border>
+                <SymbolIcon Symbol="Send" />
+            </Grid>
+        </Grid>
+        <TextBlock Grid.Row="0"
+                   Text="该新闻暂时没有评论"
+                   FontSize="20"
+                   Visibility="{Binding NoComments}" />
     </Grid>
 </Page>

@@ -9,20 +9,19 @@
       mc:Ignorable="d"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.DataContext>
-        <vm:NewsDetailPageViewModel></vm:NewsDetailPageViewModel>
+        <vm:NewsDetailPageViewModel />
     </Page.DataContext>
-    <Page.Resources>
-        <converter:VisibilityConverter x:Key="VisibilityConverter"></converter:VisibilityConverter>
-    </Page.Resources>
     <Page.BottomAppBar>
         <CommandBar x:Name="CmdBar"
-                    Visibility="Collapsed"
                     ClosedDisplayMode="Minimal">
             <AppBarButton Icon="Comment"
                           Label="查看评论"
                           Command="{Binding ViewCommentsCommand}"
-                          CommandParameter="{Binding News}">
-            </AppBarButton>
+                          CommandParameter="{Binding News}"/>
+            <AppBarButton Icon="World"
+                          Label="在IE中打开"
+                          Command="{Binding ViewInBrowerCommand}"
+                          CommandParameter="{Binding News}"/>
         </CommandBar>
     </Page.BottomAppBar>
     <Grid>
@@ -35,9 +34,7 @@
                        Text="{Binding Path=Title}"
                        Style="{StaticResource NewsDetailTitleStyle}" />
             <ScrollViewer Grid.Row="1"
-                          Content="{Binding Path=NewsDetail}"></ScrollViewer>
+                          Content="{Binding Path=NewsDetail}"/>
         </Grid>
-        <ProgressBar IsIndeterminate="True"
-                     Visibility="{Binding Path=IsLoading,Converter={StaticResource VisibilityConverter}}" />
     </Grid>
 </Page>

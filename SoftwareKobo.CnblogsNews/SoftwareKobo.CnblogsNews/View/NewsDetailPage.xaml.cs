@@ -45,10 +45,6 @@ namespace SoftwareKobo.CnblogsNews.View
             {
                 vm.News = news;
                 vm.Render(news);
-                if (news.Comments > 0)
-                {
-                    CmdBar.Visibility = Visibility.Visible;
-                }
             }
 
             Messenger.Default.Register<Tuple<string, News>>(this, ProcessMessageFromViewModel);

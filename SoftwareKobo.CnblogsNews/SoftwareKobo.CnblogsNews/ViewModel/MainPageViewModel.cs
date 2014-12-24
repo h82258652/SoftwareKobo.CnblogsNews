@@ -1,8 +1,11 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System.Collections.Generic;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using SoftwareKobo.CnblogsAPI.Model;
+using SoftwareKobo.CnblogsAPI.Service;
+using SoftwareKobo.CnblogsNews.Helper;
 using SoftwareKobo.CnblogsNews.Service;
 using System;
 using System.Collections.ObjectModel;
@@ -27,21 +30,13 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
             OnCreated();
         }
 
-        public ICommand AboutCommand
-        {
-            get
-            {
-                return new RelayCommand(() => Messenger.Default.Send<string>("about"));
-            }
-        }
-
         public ICommand BackCommand
         {
             get
             {
                 return new RelayCommand(async () =>
                 {
-                    if (IsLoading == false)
+                    if (_isLoading == false)
                     {
                         CurrentPage--;
                         await GetNews();
@@ -70,7 +65,7 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
             {
                 return new RelayCommand(async () =>
                 {
-                    if (IsLoading == false)
+                    if (_isLoading == false)
                     {
                         CurrentPage++;
                         await GetNews();
@@ -79,18 +74,6 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
             }
         }
 
-        public bool IsLoading
-        {
-            get
-            {
-                return _isLoading;
-            }
-            set
-            {
-                _isLoading = value;
-                RaisePropertyChanged(() => IsLoading);
-            }
-        }
 
         public ICommand JumpPageCommand
         {
@@ -177,7 +160,7 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
             {
                 return new RelayCommand(async () =>
                 {
-                    if (IsLoading == false)
+                    if (_isLoading == false)
                     {
                         await GetNews();
                     }
@@ -189,14 +172,15 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
         {
             if (NetworkService.IsNetworkAvailable() == false)
             {
-                await new DialogService().ShowError("请检查网络连接。", "错误", "关闭", null);
+                await NetworkService.ShowCheckNetwork();
                 return;
             }
-            this.IsLoading = true;
+            _isLoading = true;
+            await StatusBarHelper.Display(true);
             Exception exception = null;
             try
             {
-                var news = new ObservableCollection<News>(await CnblogsAPI.Service.NewsService.RecentAsync(CurrentPage, 15));
+                var news = new ObservableCollection<News>(await NewsService.RecentAsync(CurrentPage, 15));
                 ScrollView();
                 this.NewsItems = news;
             }
@@ -208,14 +192,15 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
             {
                 await new DialogService().ShowError(exception, "错误", "关闭", null);
             }
-            this.IsLoading = false;
+            await StatusBarHelper.Display(false);
+            _isLoading = false;
         }
 
         public async void OnCreated()
         {
+            CurrentPage = 1;
             if (IsInDesignMode == false)
             {
-                CurrentPage = 1;
                 await GetNews();
             }
         }

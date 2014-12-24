@@ -113,7 +113,6 @@ namespace SoftwareKobo.CnblogsNews
 
         private async void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            await ExceptionSenderService.SendExceptionToMyServer(e.Exception);
             await new DialogService().ShowError(e.Exception, "错误", "关闭", null);
         }
 

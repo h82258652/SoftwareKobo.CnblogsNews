@@ -1,9 +1,13 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System.Globalization;
+using Windows.System;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using SoftwareKobo.CnblogsAPI.Model;
 using SoftwareKobo.CnblogsAPI.Service;
+using SoftwareKobo.CnblogsNews.Data;
+using SoftwareKobo.CnblogsNews.Helper;
 using SoftwareKobo.CnblogsNews.Service;
 using SoftwareKobo.HtmlRender.Core;
 using System;
@@ -15,23 +19,9 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
 {
     public class NewsDetailPageViewModel : ViewModelBase
     {
-        private bool _isLoading;
         private UIElement _newsDetail;
         private string _title;
         private News _news;
-
-        public bool IsLoading
-        {
-            get
-            {
-                return _isLoading;
-            }
-            set
-            {
-                _isLoading = value;
-                RaisePropertyChanged(() => IsLoading);
-            }
-        }
 
         public UIElement NewsDetail
         {
@@ -76,49 +66,54 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
         {
             get
             {
+                return new RelayCommand<News>((News news) =>
+                {
+                    if (news == null)
+                    {
+                        throw new ArgumentNullException("news");
+                    }
+                    Messenger.Default.Send<Tuple<string, News>>(new Tuple<string, News>("comment", news));
+                });
+            }
+        }
+
+        public ICommand ViewInBrowerCommand
+        {
+            get
+            {
                 return new RelayCommand<News>(async (News news) =>
                 {
                     if (news == null)
                     {
                         throw new ArgumentNullException("news");
                     }
-                    var commentCount = news.Comments;
-                    if (commentCount <= 0)
-                    {
-                        await new DialogService().ShowMessageBox("该新闻暂时还没有评论。", string.Empty);
-                    }
-                    else
-                    {
-                        Messenger.Default.Send<Tuple<string, News>>(new Tuple<string, News>("comment", news));
-                    }
+                    await Launcher.LaunchUriAsync(new Uri(string.Format(CultureInfo.InvariantCulture, "http://news.cnblogs.com/n/{0}", news.Id)));
                 });
             }
         }
-
-
 
         public async void Render(News news)
         {
             if (NetworkService.IsNetworkAvailable() == false)
             {
-                await new DialogService().ShowMessageBox("请检查网络连接。", "错误");
+                await NetworkService.ShowCheckNetwork();
                 return;
             }
-            this.IsLoading = true;
+            await StatusBarHelper.Display(true);
             Exception exception = null;
             try
             {
                 var newsDetail = await NewsService.DetailAsync(news.Id);
                 this.Title = newsDetail.Title;
-                var richTextBlock = new RichTextBlock()
+                switch (LocalSettings.RenderingEngine)
                 {
-                    FontSize = 16,
-                    Margin = new Thickness(20, 0, 20, 10),
-                    IsTextSelectionEnabled = false
-                };
-                var context = new RenderContextBase(newsDetail.Content);
-                context.Render(richTextBlock);
-                this.NewsDetail = richTextBlock;
+                    case RenderingEngine.Inter:
+                        RenderByInterEngine(newsDetail);
+                        break;
+                    case RenderingEngine.Browser:
+                        RenderByBrowserEngine(newsDetail);
+                        break;
+                }
             }
             catch (Exception ex)
             {
@@ -128,7 +123,28 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
             {
                 await new DialogService().ShowError(exception, "错误", "关闭", null);
             }
-            this.IsLoading = false;
+            await StatusBarHelper.Display(false);
+        }
+
+        public void RenderByInterEngine(NewsDetail newsDetail)
+        {
+            var richTextBlock = new RichTextBlock()
+            {
+                FontSize = 16,
+                Margin = new Thickness(20, 0, 20, 10),
+                IsTextSelectionEnabled = false
+            };
+            var context = new RenderContextBase(newsDetail.Content);
+            context.Render(richTextBlock);
+            this.NewsDetail = richTextBlock;
+        }
+
+        private void RenderByBrowserEngine(NewsDetail newsDetail)
+        {
+            var webView = new WebView();
+            webView.RequestedTheme = ElementTheme.Dark;
+            webView.NavigateToString(newsDetail.Content);
+            this.NewsDetail = webView;
         }
     }
 }

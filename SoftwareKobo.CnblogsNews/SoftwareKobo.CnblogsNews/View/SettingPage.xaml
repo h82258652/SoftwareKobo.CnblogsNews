@@ -1,0 +1,68 @@
+﻿<Page x:Class="SoftwareKobo.CnblogsNews.View.SettingPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:SoftwareKobo.CnblogsNews.View"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <!--<Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="19,0,0,0">
+            <TextBlock Text="博客园新闻 for WP8.1" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0"/>
+            <TextBlock Text="设置" Margin="0,-6.5,0,26.5" Style="{ThemeResource HeaderTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
+        </StackPanel>
+
+        -->
+        <!--TODO: 应将内容放入以下网格-->
+        <!--
+        <Grid x:Name="ContentRoot">
+
+        </Grid>-->
+        <Pivot Title="博客园新闻 for WP8.1">
+            <PivotItem Header="设置">
+                <Grid>
+                    <ComboBox x:Name="CmbEngine"
+                              Header="渲染引擎"
+                              SelectionChanged="Selector_OnSelectionChanged">
+                        <ComboBoxItem x:Name="CmbInter"
+                                      Content="内部引擎" />
+                        <ComboBoxItem x:Name="CmbBrowser"
+                                      Content="浏览器引擎" />
+                    </ComboBox>
+                </Grid>
+            </PivotItem>
+            <PivotItem Header="账号">
+                <Grid>
+                    <Grid x:Name="GridLogin">
+                        <StackPanel>
+                            <TextBox Header="用户名" x:Name="TxtUserName" />
+                            <PasswordBox Header="密码" x:Name="TxtPassword" />
+                            <Button Content="登录"
+                                    HorizontalAlignment="Center" 
+                                    Click="BtnLogin_OnClick"/>
+                        </StackPanel>
+                    </Grid>
+                    <Grid x:Name="GridLogout">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="已登录"
+                                   Margin="5"
+                                   Style="{StaticResource MessageDialogTitleStyle}"/>
+                        <Button Grid.Column="1"
+                                Content="登出"
+                                VerticalAlignment="Top"
+                                Click="BtnLogout_OnClick"/>
+                    </Grid>
+                </Grid>
+            </PivotItem>
+        </Pivot>
+    </Grid>
+</Page>

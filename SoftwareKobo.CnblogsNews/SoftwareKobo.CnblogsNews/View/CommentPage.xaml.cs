@@ -2,14 +2,20 @@
 
 using System;
 using System.Linq;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Input;
 using GalaSoft.MvvmLight.Views;
 using SoftwareKobo.CnblogsAPI.Extension;
 using SoftwareKobo.CnblogsAPI.Model;
 using Windows.Phone.UI.Input;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using SoftwareKobo.CnblogsAPI.Service;
+using SoftwareKobo.CnblogsNews.Data;
 using SoftwareKobo.CnblogsNews.Service;
+using SoftwareKobo.CnblogsNews.ViewModel;
 
 namespace SoftwareKobo.CnblogsNews.View
 {
@@ -39,7 +45,13 @@ namespace SoftwareKobo.CnblogsNews.View
         {
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;
 
-            LoadComments(e.Parameter as News);
+            var news = e.Parameter as News;
+            var vm = this.DataContext as CommentPageViewModel;
+            if (news != null && vm != null)
+            {
+                vm.News = news;
+                vm.LoadComments();
+            }
 
             base.OnNavigatedTo(e);
         }
@@ -53,43 +65,41 @@ namespace SoftwareKobo.CnblogsNews.View
             }
         }
 
-        public async void LoadComments(News news)
+        private async void BtnSend_OnPointerReleased(object sender, PointerRoutedEventArgs e)
         {
-            Pb.Visibility = Visibility.Visible;
-
-            if (news != null)
+            var comment = TxtComment.Text;
+            comment = comment + Environment.NewLine + "——由博客园新闻WP8.1客户端发送";
+            var vm = this.DataContext as CommentPageViewModel;
+            if (vm == null)
             {
-                if (NetworkService.IsNetworkAvailable() == false)
-                {
-                    await new DialogService().ShowError("请检查网络连接。", "错误", "关闭", null);
-                }
-                else
-                {
-                    Exception exception = null;
-                    try
-                    {
-                        var comments = await news.CommentAsync(1, int.MaxValue);
-                        var index = 0;
-                        var commentsWithIndex = from temp in comments
-                                                select new
-                                                {
-                                                    Index = ++index,
-                                                    Comment = temp
-                                                };
-                        Lv.ItemsSource = commentsWithIndex;
-                    }
-                    catch (Exception ex)
-                    {
-                        exception = ex;
-                    }
-                    if (exception != null)
-                    {
-                        await new DialogService().ShowError(exception, "错误", "关闭", null);
-                    }
-                }
+                return;
             }
 
-            Pb.Visibility = Visibility.Collapsed;
+            Exception exception = null;
+            string result = null;
+            try
+            {
+                result = await UserService.SendNewsCommentAsync(LocalSettings.LoginCookie, vm.News.Id, comment, 0);
+            }
+            catch (Exception ex)
+            {
+                exception = ex;
+            }
+            if (exception != null)
+            {
+                await new DialogService().ShowError(exception, "错误", "关闭", null);
+            }
+            bool isSuccess = UserService.IsSendNewsCommentSuccess(result);
+            if (isSuccess)
+            {
+                await new DialogService().ShowMessage("发送成功", "成功");
+                vm.LoadComments();
+                TxtComment.Text = string.Empty;
+            }
+            else
+            {
+                await new DialogService().ShowMessage(result, "错误");
+            }
         }
     }
 }

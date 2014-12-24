@@ -160,5 +160,15 @@ namespace SoftwareKobo.CnblogsNews.View
                 FlyoutBase.ShowAttachedFlyout(frameworkElement);
             }
         }
+
+        private void BtnSetting_OnClick(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof (SettingPage));
+        }
+
+        private void BtnAbout_OnClick(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof (AboutPage));
+        }
     }
 }
