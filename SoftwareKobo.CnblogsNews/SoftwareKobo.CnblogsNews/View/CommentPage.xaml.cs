@@ -46,16 +46,15 @@ namespace SoftwareKobo.CnblogsNews.View
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;
 
             var news = e.Parameter as News;
-            var vm = this.DataContext as CommentPageViewModel;
-            if (news != null && vm != null)
+            if (news != null )
             {
-                vm.News = news;
-                vm.LoadComments();
+                ViewModel.News = news;
+                ViewModel.LoadComments();
             }
 
-            if (LocalSettings.LoginCookie==null)
+            if (LocalSettings.LoginCookie == null)
             {
-                GridSend.Visibility = Visibility.Collapsed;
+                BtnNewComment.Visibility = Visibility.Collapsed;
             }
 
             base.OnNavigatedTo(e);
@@ -72,19 +71,28 @@ namespace SoftwareKobo.CnblogsNews.View
 
         private async void BtnSend_OnPointerReleased(object sender, PointerRoutedEventArgs e)
         {
+            
+        }
+
+        private void BtnNewsComment_OnClick(object sender, RoutedEventArgs e)
+        {
+            var frameworkElement = sender as FrameworkElement;
+            if (frameworkElement != null)
+            {
+                FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
+            }
+        }
+
+        private async void BtnSendComment_Click(object sender, RoutedEventArgs e)
+        {
             var comment = TxtComment.Text;
             comment = comment + Environment.NewLine + "——由博客园新闻WP8.1客户端发送";
-            var vm = this.DataContext as CommentPageViewModel;
-            if (vm == null)
-            {
-                return;
-            }
-
+           
             Exception exception = null;
             string result = null;
             try
             {
-                result = await UserService.SendNewsCommentAsync(LocalSettings.LoginCookie, vm.News.Id, comment, 0);
+                result = await UserService.SendNewsCommentAsync(LocalSettings.LoginCookie, ViewModel.News.Id, comment, 0);
             }
             catch (Exception ex)
             {
@@ -98,7 +106,7 @@ namespace SoftwareKobo.CnblogsNews.View
             if (isSuccess)
             {
                 await new DialogService().ShowMessage("发送成功", "成功");
-                vm.LoadComments();
+                ViewModel.LoadComments();
                 TxtComment.Text = string.Empty;
             }
             else
