@@ -121,8 +121,8 @@ namespace SoftwareKobo.CnblogsNews.View
 
         private void Comment_OnPointerReleased(object sender, PointerRoutedEventArgs e)
         {
-            FrameworkElement frameworkElement = sender as FrameworkElement;
-            if (frameworkElement != null)
+            var frameworkElement = sender as FrameworkElement;
+            if (frameworkElement != null && LocalSettings.LoginCookie != null)
             {
                 FlyoutBase.ShowAttachedFlyout(frameworkElement);
             }
