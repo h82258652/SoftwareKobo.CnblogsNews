@@ -40,11 +40,10 @@ namespace SoftwareKobo.CnblogsNews.View
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;
 
             var news = e.Parameter as News;
-            var vm = this.DataContext as NewsDetailPageViewModel;
-            if (news != null && vm != null)
+            if (news != null)
             {
-                vm.News = news;
-                vm.Render(news);
+                ViewModel.News = news;
+                ViewModel.Render(news);
             }
 
             Messenger.Default.Register<Tuple<string, News>>(this, ProcessMessageFromViewModel);
