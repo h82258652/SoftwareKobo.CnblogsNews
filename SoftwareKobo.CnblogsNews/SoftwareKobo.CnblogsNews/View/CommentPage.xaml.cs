@@ -46,7 +46,7 @@ namespace SoftwareKobo.CnblogsNews.View
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;
 
             var news = e.Parameter as News;
-            if (news != null )
+            if (news != null)
             {
                 ViewModel.News = news;
                 ViewModel.LoadComments();
@@ -71,7 +71,7 @@ namespace SoftwareKobo.CnblogsNews.View
 
         private async void BtnSend_OnPointerReleased(object sender, PointerRoutedEventArgs e)
         {
-            
+
         }
 
         private void BtnNewsComment_OnClick(object sender, RoutedEventArgs e)
@@ -87,7 +87,7 @@ namespace SoftwareKobo.CnblogsNews.View
         {
             var comment = TxtComment.Text;
             comment = comment + Environment.NewLine + "——由博客园新闻WP8.1客户端发送";
-           
+
             Exception exception = null;
             string result = null;
             try
@@ -106,8 +106,8 @@ namespace SoftwareKobo.CnblogsNews.View
             if (isSuccess)
             {
                 await new DialogService().ShowMessage("发送成功", "成功");
-                ViewModel.LoadComments();
-                TxtComment.Text = string.Empty;
+                ViewModel.LoadComments();// 刷新评论。
+                TxtComment.Text = string.Empty;// 清空已发送的内容。
             }
             else
             {
