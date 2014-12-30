@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace SoftwareKobo.CnblogsNews.Data
@@ -18,11 +13,13 @@ namespace SoftwareKobo.CnblogsNews.Data
             get
             {
                 RenderingEngine renderingEngine;
-                if (LocalSettingsInstance.Values.ContainsKey("RenderingEngine") == false || Enum.TryParse(LocalSettingsInstance.Values["RenderingEngine"] as string, out renderingEngine) == false)
+                if (LocalSettingsInstance.Values.ContainsKey("RenderingEngine") == false || Enum.TryParse(LocalSettingsInstance.Values["RenderingEngine"] as string,
+                    out renderingEngine) == false)
                 {
                     LocalSettingsInstance.Values["RenderingEngine"] = RenderingEngine.Inter.ToString();
                 }
-                return (RenderingEngine)Enum.Parse(typeof(RenderingEngine), LocalSettingsInstance.Values["RenderingEngine"].ToString());
+                return (RenderingEngine)Enum.Parse(typeof(RenderingEngine),
+                    LocalSettingsInstance.Values["RenderingEngine"].ToString());
             }
             set
             {
@@ -58,18 +55,16 @@ namespace SoftwareKobo.CnblogsNews.Data
                 }
                 else
                 {
-
-
                     if (LocalSettingsInstance.Containers.ContainsKey("LoginCookie") == false)
                     {
-                        LocalSettingsInstance.CreateContainer("LoginCookie", ApplicationDataCreateDisposition.Always);
+                        LocalSettingsInstance.CreateContainer("LoginCookie",
+                            ApplicationDataCreateDisposition.Always);
                     }
                     LocalSettingsInstance.Containers["LoginCookie"].Values["Name"] = value.Name;
                     LocalSettingsInstance.Containers["LoginCookie"].Values["Value"] = value.Value;
                     LocalSettingsInstance.Containers["LoginCookie"].Values["Path"] = value.Path;
                     LocalSettingsInstance.Containers["LoginCookie"].Values["Domain"] = value.Domain;
                 }
-
             }
         }
     }
