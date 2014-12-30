@@ -166,5 +166,9 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
             webView.NavigateToString(content.ToString());
             this.NewsDetail = webView;
         }
+
+        public NewsDetailPageViewModel()
+        {
+        }
     }
 }

@@ -70,6 +70,10 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
             }
         }
 
+        public CommentPageViewModel()
+        {
+        }
+
         public async void LoadComments()
         {
             if (NetworkService.IsNetworkAvailable() == false)
