@@ -1,7 +1,6 @@
-﻿using System.Net.NetworkInformation;
+﻿using GalaSoft.MvvmLight.Views;
 using System.Threading.Tasks;
 using Windows.Networking.Connectivity;
-using GalaSoft.MvvmLight.Views;
 
 namespace SoftwareKobo.CnblogsNews.Service
 {
