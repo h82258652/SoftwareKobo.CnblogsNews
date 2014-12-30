@@ -1,5 +1,7 @@
 ﻿using System.Globalization;
+using System.Text;
 using Windows.System;
+using Windows.UI;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -142,8 +144,23 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
         private void RenderByBrowserEngine(NewsDetail newsDetail)
         {
             var webView = new WebView();
-            webView.RequestedTheme = ElementTheme.Dark;
-            webView.NavigateToString(newsDetail.Content);
+            StringBuilder content = new StringBuilder();
+            switch (Application.Current.RequestedTheme)
+            {
+                case ApplicationTheme.Dark:
+                    webView.DefaultBackgroundColor = Colors.Black;
+                    content.Append("<html><head><style type=\"text/css\">* {color: white;}</style></head><body>");
+                    break;
+                case ApplicationTheme.Light:
+                    webView.DefaultBackgroundColor = Colors.White;
+                    content.Append("<html><head></head><body>");
+                    break;
+                default:
+                    throw new InvalidOperationException();
+            }
+            content.Append(newsDetail.Content);
+            content.Append("</body></html>");
+            webView.NavigateToString(content.ToString());
             this.NewsDetail = webView;
         }
     }
