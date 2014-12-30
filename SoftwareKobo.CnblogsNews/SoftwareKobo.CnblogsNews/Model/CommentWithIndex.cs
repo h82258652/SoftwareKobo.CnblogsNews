@@ -15,5 +15,9 @@ namespace SoftwareKobo.CnblogsNews.Model
             get;
             set;
         }
+
+        public CommentWithIndex()
+        {
+        }
     }
 }
