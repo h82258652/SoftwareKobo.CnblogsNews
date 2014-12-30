@@ -15,7 +15,7 @@
     <Page.BottomAppBar>
         <CommandBar x:Name="CmdBar"
                     ClosedDisplayMode="Minimal">
-            <AppBarButton x:Name="BtnViewComment"
+            <AppBarButton x:Name="btnViewComment"
                           Icon="Comment"
                           Command="{Binding ViewCommentsCommand}"
                           CommandParameter="{Binding News}">
