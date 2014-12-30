@@ -1,5 +1,6 @@
 ﻿using System.Net.NetworkInformation;
 using System.Threading.Tasks;
+using Windows.Networking.Connectivity;
 using GalaSoft.MvvmLight.Views;
 
 namespace SoftwareKobo.CnblogsNews.Service
@@ -8,7 +9,7 @@ namespace SoftwareKobo.CnblogsNews.Service
     {
         public static bool IsNetworkAvailable()
         {
-            return NetworkInterface.GetIsNetworkAvailable();
+            return NetworkInformation.GetInternetConnectionProfile() != null;
         }
 
         public static async Task ShowCheckNetwork()
