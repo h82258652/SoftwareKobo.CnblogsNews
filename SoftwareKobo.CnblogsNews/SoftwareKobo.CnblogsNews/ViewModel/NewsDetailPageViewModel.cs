@@ -1,8 +1,4 @@
-﻿using System.Globalization;
-using System.Text;
-using Windows.System;
-using Windows.UI;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
@@ -13,7 +9,11 @@ using SoftwareKobo.CnblogsNews.Helper;
 using SoftwareKobo.CnblogsNews.Service;
 using SoftwareKobo.HtmlRender.Core;
 using System;
+using System.Globalization;
+using System.Text;
 using System.Windows.Input;
+using Windows.System;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -112,6 +112,7 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
                     case RenderingEngine.Inter:
                         RenderByInterEngine(newsDetail);
                         break;
+
                     case RenderingEngine.Browser:
                         RenderByBrowserEngine(newsDetail);
                         break;
@@ -144,17 +145,19 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
         private void RenderByBrowserEngine(NewsDetail newsDetail)
         {
             var webView = new WebView();
-            StringBuilder content = new StringBuilder();
+            var content = new StringBuilder();
             switch (Application.Current.RequestedTheme)
             {
                 case ApplicationTheme.Dark:
                     webView.DefaultBackgroundColor = Colors.Black;
                     content.Append("<html><head><style type=\"text/css\">* {color: white;}</style></head><body>");
                     break;
+
                 case ApplicationTheme.Light:
                     webView.DefaultBackgroundColor = Colors.White;
                     content.Append("<html><head></head><body>");
                     break;
+
                 default:
                     throw new InvalidOperationException();
             }

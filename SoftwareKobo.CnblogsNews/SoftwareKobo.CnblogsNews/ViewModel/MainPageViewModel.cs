@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
@@ -11,9 +10,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
 
 namespace SoftwareKobo.CnblogsNews.ViewModel
 {
@@ -73,7 +70,6 @@ namespace SoftwareKobo.CnblogsNews.ViewModel
                 }, () => CurrentPage < 100);
             }
         }
-
 
         public ICommand JumpPageCommand
         {

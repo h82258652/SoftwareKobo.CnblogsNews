@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Windows.UI.Xaml;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 using SoftwareKobo.CnblogsAPI.Extension;
@@ -14,6 +6,12 @@ using SoftwareKobo.CnblogsAPI.Model;
 using SoftwareKobo.CnblogsNews.Helper;
 using SoftwareKobo.CnblogsNews.Model;
 using SoftwareKobo.CnblogsNews.Service;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows.Input;
+using Windows.UI.Xaml;
 
 namespace SoftwareKobo.CnblogsNews.ViewModel
 {
