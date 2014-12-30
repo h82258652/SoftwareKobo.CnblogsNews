@@ -18,8 +18,7 @@
             <AppBarButton x:Name="btnViewComment"
                           Icon="Comment"
                           Command="{Binding ViewCommentsCommand}"
-                          CommandParameter="{Binding News}">
-            </AppBarButton>
+                          CommandParameter="{Binding News}" />
             <CommandBar.SecondaryCommands>
                 <AppBarButton Icon="World"
                               Label="在IE中打开"
