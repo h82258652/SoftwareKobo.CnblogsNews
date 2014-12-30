@@ -20,7 +20,7 @@
             <AppBarButton x:Name="BtnNewComment"
                           Icon="Send"
                           Label="新评论"
-                          Click="BtnNewsComment_OnClick">
+                          Click="BtnNewComment_OnClick">
                 <FlyoutBase.AttachedFlyout>
                     <Flyout Placement="Full">
                         <Grid>
@@ -54,7 +54,9 @@
                   ItemsSource="{Binding CommentsWithIndex}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Margin="20,0,20,10">
+                    <Grid x:Name="GridComment"
+                          Margin="20,0,20,10"
+                          PointerReleased="Comment_OnPointerReleased">
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition />
@@ -80,9 +82,22 @@
                                        core:HtmlRenderHelper.Html="{Binding Path=Comment.Content}"
                                        FontSize="16"
                                        IsTextSelectionEnabled="False" />
+                        <FlyoutBase.AttachedFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem DataContext="{Binding ElementName=GridComment,Path=DataContext}"
+                                                Text="回复"
+                                                Click="MenuFlyoutItem_OnClick" />
+                            </MenuFlyout>
+                        </FlyoutBase.AttachedFlyout>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment"
+                            Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel />

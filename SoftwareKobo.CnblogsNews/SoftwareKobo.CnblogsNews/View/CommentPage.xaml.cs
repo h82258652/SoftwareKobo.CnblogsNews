@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using SoftwareKobo.CnblogsAPI.Service;
 using SoftwareKobo.CnblogsNews.Data;
+using SoftwareKobo.CnblogsNews.Model;
 using SoftwareKobo.CnblogsNews.Service;
 using SoftwareKobo.CnblogsNews.ViewModel;
 
@@ -69,12 +70,7 @@ namespace SoftwareKobo.CnblogsNews.View
             }
         }
 
-        private async void BtnSend_OnPointerReleased(object sender, PointerRoutedEventArgs e)
-        {
-
-        }
-
-        private void BtnNewsComment_OnClick(object sender, RoutedEventArgs e)
+        private void BtnNewComment_OnClick(object sender, RoutedEventArgs e)
         {
             var frameworkElement = sender as FrameworkElement;
             if (frameworkElement != null)
@@ -92,7 +88,12 @@ namespace SoftwareKobo.CnblogsNews.View
             string result = null;
             try
             {
-                result = await UserService.SendNewsCommentAsync(LocalSettings.LoginCookie, ViewModel.News.Id, comment, 0);
+                int replyId = 0;
+                if (BtnNewComment.Tag is int)
+                {
+                    replyId = (int)BtnNewComment.Tag;
+                }
+                result = await UserService.SendNewsCommentAsync(LocalSettings.LoginCookie, ViewModel.News.Id, comment, replyId);
             }
             catch (Exception ex)
             {
@@ -108,11 +109,44 @@ namespace SoftwareKobo.CnblogsNews.View
                 await new DialogService().ShowMessage("发送成功", "成功");
                 ViewModel.LoadComments();// 刷新评论。
                 TxtComment.Text = string.Empty;// 清空已发送的内容。
+                BtnNewComment.Tag = null;// 清空回复 Id。
             }
             else
             {
                 await new DialogService().ShowMessage(result, "错误");
             }
+        }
+
+        private void Comment_OnPointerReleased(object sender, PointerRoutedEventArgs e)
+        {
+            FrameworkElement frameworkElement = sender as FrameworkElement;
+            if (frameworkElement != null)
+            {
+                FlyoutBase.ShowAttachedFlyout(frameworkElement);
+            }
+        }
+
+        private void MenuFlyoutItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            var menuFlyoutItem = sender as MenuFlyoutItem;
+            if (menuFlyoutItem == null)
+            {
+                return;
+            }
+            var commentWithIndex = menuFlyoutItem.DataContext as CommentWithIndex;
+            if (commentWithIndex == null)
+            {
+                return;
+            }
+            var comment = commentWithIndex.Comment;
+            if (comment == null)
+            {
+                return;
+            }
+
+            TxtComment.Text = "@" + comment.Author.Name + Environment.NewLine;
+            BtnNewComment.Tag = comment.Id;
+            FlyoutBase.ShowAttachedFlyout(BtnNewComment);
         }
     }
 }
