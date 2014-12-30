@@ -75,6 +75,7 @@ namespace SoftwareKobo.CnblogsNews.View
             var frameworkElement = sender as FrameworkElement;
             if (frameworkElement != null)
             {
+                TxtComment.Text = string.Empty;
                 BtnNewComment.Tag = null;
                 FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
             }
