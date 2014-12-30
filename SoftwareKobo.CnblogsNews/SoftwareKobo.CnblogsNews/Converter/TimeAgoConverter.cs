@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using Windows.UI.Xaml.Data;
 
 namespace SoftwareKobo.CnblogsNews.Converter
@@ -27,19 +28,19 @@ namespace SoftwareKobo.CnblogsNews.Converter
             }
             else if (expired.TotalDays > 1)
             {
-                return string.Format("{0}天前", (int)Math.Floor(expired.TotalDays));
+                return string.Format(CultureInfo.InvariantCulture, "{0}天前", (int)Math.Floor(expired.TotalDays));
             }
             else if (expired.TotalHours > 1)
             {
-                return string.Format("{0}小时前", (int)Math.Floor(expired.TotalHours));
+                return string.Format(CultureInfo.InvariantCulture, "{0}小时前", (int)Math.Floor(expired.TotalHours));
             }
             else if (expired.TotalMinutes > 1)
             {
-                return string.Format("{0}分钟前", (int)Math.Floor(expired.TotalMinutes));
+                return string.Format(CultureInfo.InvariantCulture, "{0}分钟前", (int)Math.Floor(expired.TotalMinutes));
             }
             else if (expired.TotalSeconds >= 1)
             {
-                return string.Format("{0}秒前", (int)Math.Floor(expired.TotalSeconds));
+                return string.Format(CultureInfo.InvariantCulture, "{0}秒前", (int)Math.Floor(expired.TotalSeconds));
             }
             else
             {
