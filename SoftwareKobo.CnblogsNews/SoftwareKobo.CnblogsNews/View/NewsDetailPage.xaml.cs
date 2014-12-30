@@ -42,6 +42,7 @@ namespace SoftwareKobo.CnblogsNews.View
             var news = e.Parameter as News;
             if (news != null)
             {
+                BtnViewComment.Label = news.Comments + "条评论";
                 ViewModel.News = news;
                 ViewModel.Render(news);
             }

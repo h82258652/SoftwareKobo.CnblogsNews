@@ -6,6 +6,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="using:SoftwareKobo.CnblogsNews.ViewModel"
       xmlns:converter="using:SoftwareKobo.CnblogsNews.Converter"
+      xmlns:system="using:System"
       mc:Ignorable="d"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.DataContext>
@@ -14,10 +15,11 @@
     <Page.BottomAppBar>
         <CommandBar x:Name="CmdBar"
                     ClosedDisplayMode="Minimal">
-            <AppBarButton Icon="Comment"
-                          Label="查看评论"
+            <AppBarButton x:Name="BtnViewComment"
+                          Icon="Comment"
                           Command="{Binding ViewCommentsCommand}"
-                          CommandParameter="{Binding News}" />
+                          CommandParameter="{Binding News}">
+            </AppBarButton>
             <CommandBar.SecondaryCommands>
                 <AppBarButton Icon="World"
                               Label="在IE中打开"
