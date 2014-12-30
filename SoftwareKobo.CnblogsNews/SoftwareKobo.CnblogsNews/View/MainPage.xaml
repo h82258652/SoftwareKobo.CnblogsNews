@@ -12,7 +12,7 @@
       mc:Ignorable="d"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.DataContext>
-        <vm:MainPageViewModel />
+        <vm:MainPageViewModel x:Name="ViewModel" />
     </Page.DataContext>
     <Page.Resources>
         <converter:TimeAgoConverter x:Key="TimeAgoConverter" />
