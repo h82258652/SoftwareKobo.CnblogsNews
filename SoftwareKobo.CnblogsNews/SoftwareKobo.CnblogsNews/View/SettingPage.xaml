@@ -8,26 +8,10 @@
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <!--<Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <StackPanel Grid.Row="0" Margin="19,0,0,0">
-            <TextBlock Text="博客园新闻 for WP8.1" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0"/>
-            <TextBlock Text="设置" Margin="0,-6.5,0,26.5" Style="{ThemeResource HeaderTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
-        </StackPanel>
-
-        -->
-        <!--TODO: 应将内容放入以下网格-->
-        <!--
-        <Grid x:Name="ContentRoot">
-
-        </Grid>-->
         <Pivot Title="博客园新闻 for WP8.1">
             <PivotItem Header="设置">
                 <Grid>
-                    <ComboBox x:Name="CmbEngine"
+                    <ComboBox x:Name="cmbEngine"
                               Header="渲染引擎"
                               SelectionChanged="Selector_OnSelectionChanged">
                         <ComboBoxItem x:Name="CmbInter"

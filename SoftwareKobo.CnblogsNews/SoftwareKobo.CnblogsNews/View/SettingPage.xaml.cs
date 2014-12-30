@@ -83,10 +83,10 @@ namespace SoftwareKobo.CnblogsNews.View
             switch (LocalSettings.RenderingEngine)
             {
                 case RenderingEngine.Inter:
-                    CmbEngine.SelectedItem = CmbInter;
+                    cmbEngine.SelectedItem = CmbInter;
                     break;
                 case RenderingEngine.Browser:
-                    CmbEngine.SelectedItem = CmbBrowser;
+                    cmbEngine.SelectedItem = CmbBrowser;
                     break;
             }
         }
