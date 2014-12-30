@@ -57,7 +57,7 @@
                 <TextBlock Text="页"
                            Style="{StaticResource PageStyle}" />
             </StackPanel>
-            <ListView x:Name="LvwNews"
+            <ListView x:Name="lvwNews"
                       Grid.Row="1"
                       ItemsSource="{Binding Path=NewsItems}"
                       IsItemClickEnabled="True">
@@ -102,7 +102,7 @@
                             <FlyoutBase.AttachedFlyout>
                                 <MenuFlyout>
                                     <MenuFlyoutItem Text="查看评论"
-                                                    Command="{Binding ElementName=LvwNews,Path=DataContext.ViewCommentsCommand}"
+                                                    Command="{Binding ElementName=lvwNews,Path=DataContext.ViewCommentsCommand}"
                                                     CommandParameter="{Binding}" />
                                 </MenuFlyout>
                             </FlyoutBase.AttachedFlyout>

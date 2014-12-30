@@ -33,10 +33,10 @@ namespace SoftwareKobo.CnblogsNews.View
             }
             else if (message == "scrolltop")
             {
-                var item = LvwNews.Items.FirstOrDefault();
+                var item = lvwNews.Items.FirstOrDefault();
                 if (item != null)
                 {
-                    LvwNews.ScrollIntoView(item, ScrollIntoViewAlignment.Leading);
+                    lvwNews.ScrollIntoView(item, ScrollIntoViewAlignment.Leading);
                 }
             }
         }
@@ -79,7 +79,7 @@ namespace SoftwareKobo.CnblogsNews.View
                     Height = new GridLength(1, GridUnitType.Star)
                 });
                 Grid.SetRow(SpPage, 0);
-                Grid.SetRow(LvwNews, 1);
+                Grid.SetRow(lvwNews, 1);
                 SpPage.Orientation = Orientation.Horizontal;
             }
             else if (orientation == DisplayOrientations.Landscape)
@@ -96,7 +96,7 @@ namespace SoftwareKobo.CnblogsNews.View
                     Width = new GridLength(1, GridUnitType.Star)
                 });
                 Grid.SetColumn(SpPage, 0);
-                Grid.SetColumn(LvwNews, 1);
+                Grid.SetColumn(lvwNews, 1);
                 SpPage.Orientation = Orientation.Vertical;
             }
             else if (orientation == DisplayOrientations.LandscapeFlipped)
@@ -113,7 +113,7 @@ namespace SoftwareKobo.CnblogsNews.View
                     Width = new GridLength(26.667, GridUnitType.Pixel)
                 });
                 Grid.SetColumn(SpPage, 1);
-                Grid.SetColumn(LvwNews, 0);
+                Grid.SetColumn(lvwNews, 0);
                 SpPage.Orientation = Orientation.Vertical;
             }
         }
