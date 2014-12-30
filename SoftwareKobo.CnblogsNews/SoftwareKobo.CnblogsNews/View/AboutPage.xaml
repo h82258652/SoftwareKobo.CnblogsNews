@@ -54,6 +54,7 @@
                     <TextBlock Text="第三方组件："></TextBlock>
                     <TextBlock Text="    MVVMLight"></TextBlock>
                     <TextBlock Text="    AngleSharp"></TextBlock>
+                    <TextBlock Text="    Json.NET"></TextBlock>
                     <TextBlock Text="对此表示感谢！"></TextBlock>
                     <TextBlock><!--just for line break--></TextBlock>
                     <TextBlock Text="声明："></TextBlock>
