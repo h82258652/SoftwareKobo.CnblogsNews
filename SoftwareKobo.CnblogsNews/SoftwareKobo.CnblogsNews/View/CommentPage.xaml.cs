@@ -55,7 +55,7 @@ namespace SoftwareKobo.CnblogsNews.View
 
             if (LocalSettings.LoginCookie == null)
             {
-                BtnNewComment.Visibility = Visibility.Collapsed;
+                btnNewComment.Visibility = Visibility.Collapsed;
             }
 
             base.OnNavigatedTo(e);
@@ -75,15 +75,15 @@ namespace SoftwareKobo.CnblogsNews.View
             var frameworkElement = sender as FrameworkElement;
             if (frameworkElement != null)
             {
-                TxtComment.Text = string.Empty;
-                BtnNewComment.Tag = null;
+                tbComment.Text = string.Empty;
+                btnNewComment.Tag = null;
                 FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
             }
         }
 
         private async void BtnSendComment_Click(object sender, RoutedEventArgs e)
         {
-            var comment = TxtComment.Text;
+            var comment = tbComment.Text;
             comment = comment + Environment.NewLine + "——由博客园新闻WP8.1客户端发送";
 
             Exception exception = null;
@@ -91,9 +91,9 @@ namespace SoftwareKobo.CnblogsNews.View
             try
             {
                 int replyId = 0;
-                if (BtnNewComment.Tag is int)
+                if (btnNewComment.Tag is int)
                 {
-                    replyId = (int)BtnNewComment.Tag;
+                    replyId = (int)btnNewComment.Tag;
                 }
                 result = await UserService.SendNewsCommentAsync(LocalSettings.LoginCookie, ViewModel.News.Id, comment, replyId);
             }
@@ -110,8 +110,8 @@ namespace SoftwareKobo.CnblogsNews.View
             {
                 await new DialogService().ShowMessage("发送成功", "成功");
                 ViewModel.LoadComments();// 刷新评论。
-                TxtComment.Text = string.Empty;// 清空已发送的内容。
-                BtnNewComment.Tag = null;// 清空回复 Id。
+                tbComment.Text = string.Empty;// 清空已发送的内容。
+                btnNewComment.Tag = null;// 清空回复 Id。
             }
             else
             {
@@ -146,9 +146,9 @@ namespace SoftwareKobo.CnblogsNews.View
                 return;
             }
 
-            TxtComment.Text = "@" + comment.Author.Name + Environment.NewLine;
-            BtnNewComment.Tag = comment.Id;
-            FlyoutBase.ShowAttachedFlyout(BtnNewComment);
+            tbComment.Text = "@" + comment.Author.Name + Environment.NewLine;
+            btnNewComment.Tag = comment.Id;
+            FlyoutBase.ShowAttachedFlyout(btnNewComment);
         }
     }
 }

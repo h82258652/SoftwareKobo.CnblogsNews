@@ -17,7 +17,7 @@
     </Page.Resources>
     <Page.BottomAppBar>
         <CommandBar>
-            <AppBarButton x:Name="BtnNewComment"
+            <AppBarButton x:Name="btnNewComment"
                           Icon="Send"
                           Label="新评论"
                           Click="BtnNewComment_OnClick">
@@ -28,7 +28,7 @@
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <TextBox x:Name="TxtComment"
+                            <TextBox x:Name="tbComment"
                                      Grid.Row="0"
                                      VerticalAlignment="Stretch"
                                      AcceptsReturn="True"
@@ -50,7 +50,7 @@
         </CommandBar>
     </Page.BottomAppBar>
     <Grid>
-        <ListView x:Name="Lv"
+        <ListView x:Name="lvw"
                   ItemsSource="{Binding CommentsWithIndex}">
             <ListView.ItemTemplate>
                 <DataTemplate>
