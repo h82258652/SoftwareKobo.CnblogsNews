@@ -17,11 +17,13 @@
             <AppBarButton Icon="Comment"
                           Label="查看评论"
                           Command="{Binding ViewCommentsCommand}"
-                          CommandParameter="{Binding News}"/>
-            <AppBarButton Icon="World"
-                          Label="在IE中打开"
-                          Command="{Binding ViewInBrowerCommand}"
-                          CommandParameter="{Binding News}"/>
+                          CommandParameter="{Binding News}" />
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Icon="World"
+                              Label="在IE中打开"
+                              Command="{Binding ViewInBrowerCommand}"
+                              CommandParameter="{Binding News}" />
+            </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
     <Grid>
@@ -34,7 +36,7 @@
                        Text="{Binding Path=Title}"
                        Style="{StaticResource NewsDetailTitleStyle}" />
             <ScrollViewer Grid.Row="1"
-                          Content="{Binding Path=NewsDetail}"/>
+                          Content="{Binding Path=NewsDetail}" />
         </Grid>
     </Grid>
 </Page>
