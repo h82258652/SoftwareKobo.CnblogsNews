@@ -199,7 +199,7 @@
     </Reference>
     <Reference Include="SoftwareKobo.CnblogsAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SoftwareKobo.CnblogsAPI.1.2.1\lib\SoftwareKobo.CnblogsAPI.dll</HintPath>
+      <HintPath>..\packages\SoftwareKobo.CnblogsAPI.1.2.2\lib\SoftwareKobo.CnblogsAPI.dll</HintPath>
     </Reference>
     <Reference Include="SoftwareKobo.HtmlRender.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
