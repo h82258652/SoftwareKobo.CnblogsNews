@@ -11,9 +11,6 @@
       xmlns:core="using:Microsoft.Xaml.Interactions.Core"
       mc:Ignorable="d"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <Page.DataContext>
-        <vm:MainPageViewModel x:Name="ViewModel" />
-    </Page.DataContext>
     <Page.Resources>
         <converter:TimeAgoConverter x:Key="TimeAgoConverter" />
     </Page.Resources>

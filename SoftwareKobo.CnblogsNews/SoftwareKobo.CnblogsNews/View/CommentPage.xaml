@@ -9,9 +9,6 @@
       xmlns:viewModel="using:SoftwareKobo.CnblogsNews.ViewModel"
       mc:Ignorable="d"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <Page.DataContext>
-        <viewModel:CommentPageViewModel x:Name="ViewModel" />
-    </Page.DataContext>
     <Page.Resources>
         <converter:TimeAgoConverter x:Key="TimeAgoConverter" />
     </Page.Resources>

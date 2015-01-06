@@ -28,6 +28,16 @@ namespace SoftwareKobo.CnblogsNews.View
         public CommentPage()
         {
             this.InitializeComponent();
+
+            this.DataContext = new CommentPageViewModel();
+        }
+
+        public CommentPageViewModel ViewModel
+        {
+            get
+            {
+                return (CommentPageViewModel)this.DataContext;
+            }
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)

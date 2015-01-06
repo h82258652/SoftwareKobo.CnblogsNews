@@ -19,6 +19,16 @@ namespace SoftwareKobo.CnblogsNews.View
         public NewsDetailPage()
         {
             this.InitializeComponent();
+
+            this.DataContext = new NewsDetailPageViewModel();
+        }
+
+        public NewsDetailPageViewModel ViewModel
+        {
+            get
+            {
+                return (NewsDetailPageViewModel)this.DataContext;
+            }
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)

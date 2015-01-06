@@ -10,6 +10,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using SoftwareKobo.CnblogsAPI.Model;
+using SoftwareKobo.CnblogsNews.ViewModel;
 
 namespace SoftwareKobo.CnblogsNews.View
 {
@@ -22,7 +23,17 @@ namespace SoftwareKobo.CnblogsNews.View
         {
             this.InitializeComponent();
 
+            this.DataContext = new MainPageViewModel();
+
             this.NavigationCacheMode = NavigationCacheMode.Required;
+        }
+
+        public MainPageViewModel ViewModel
+        {
+            get
+            {
+                return (MainPageViewModel)this.DataContext;
+            }
         }
 
         public void ProcessMessageFromViewModel(string message)
@@ -163,12 +174,12 @@ namespace SoftwareKobo.CnblogsNews.View
 
         private void BtnSetting_OnClick(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof (SettingPage));
+            Frame.Navigate(typeof(SettingPage));
         }
 
         private void BtnAbout_OnClick(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof (AboutPage));
+            Frame.Navigate(typeof(AboutPage));
         }
     }
 }

@@ -9,9 +9,6 @@
       xmlns:system="using:System"
       mc:Ignorable="d"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <Page.DataContext>
-        <vm:NewsDetailPageViewModel x:Name="ViewModel" />
-    </Page.DataContext>
     <Page.BottomAppBar>
         <CommandBar x:Name="CmdBar"
                     ClosedDisplayMode="Minimal">
