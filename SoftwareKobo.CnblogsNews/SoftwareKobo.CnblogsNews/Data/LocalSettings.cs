@@ -67,5 +67,21 @@ namespace SoftwareKobo.CnblogsNews.Data
                 }
             }
         }
+
+        public static string LittleTail
+        {
+            get
+            {
+                if (LocalSettingsInstance.Values.ContainsKey("LittleTail") == false)
+                {
+                    LocalSettingsInstance.Values["LittleTail"] = "——由博客园新闻WP8.1客户端发送";
+                }
+                return (string)LocalSettingsInstance.Values["LittleTail"];
+            }
+            set
+            {
+                LocalSettingsInstance.Values["LittleTail"] = value;
+            }
+        }
     }
 }

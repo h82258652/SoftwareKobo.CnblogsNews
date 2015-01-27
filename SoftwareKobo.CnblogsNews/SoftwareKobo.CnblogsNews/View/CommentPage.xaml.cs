@@ -100,7 +100,11 @@ namespace SoftwareKobo.CnblogsNews.View
             await StatusBarHelper.Display(true);
 
             var comment = tbComment.Text;
-            comment = comment + Environment.NewLine + "——由博客园新闻WP8.1客户端发送";
+            comment = comment + Environment.NewLine + LocalSettings.LittleTail;
+            if (comment.Length < 3)
+            {
+                comment = comment.PadRight(3);
+            }
 
             Exception exception = null;
             string result = null;

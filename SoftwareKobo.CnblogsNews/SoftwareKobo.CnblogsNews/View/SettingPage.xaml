@@ -10,7 +10,7 @@
     <Grid>
         <Pivot Title="博客园新闻 for WP8.1">
             <PivotItem Header="设置">
-                <Grid>
+                <StackPanel>
                     <ComboBox x:Name="cmbEngine"
                               Header="渲染引擎"
                               SelectionChanged="Selector_OnSelectionChanged">
@@ -19,17 +19,27 @@
                         <ComboBoxItem x:Name="CmbBrowser"
                                       Content="浏览器引擎" />
                     </ComboBox>
-                </Grid>
+                    <TextBox Header="小尾巴"
+                             x:Name="txtLittleTail"
+                             TextWrapping="Wrap"
+                             AcceptsReturn="True"
+                             TextChanged="TxtLittleTail_OnTextChanged" />
+                    <Button HorizontalAlignment="Right"
+                            Content="重设小尾巴到默认"
+                            Click="BtnResetLittleTail_Click" />
+                </StackPanel>
             </PivotItem>
             <PivotItem Header="账号">
                 <Grid>
                     <Grid x:Name="GridLogin">
                         <StackPanel>
-                            <TextBox Header="用户名" x:Name="TxtUserName" />
-                            <PasswordBox Header="密码" x:Name="TxtPassword" />
+                            <TextBox Header="用户名"
+                                     x:Name="TxtUserName" />
+                            <PasswordBox Header="密码"
+                                         x:Name="TxtPassword" />
                             <Button Content="登录"
-                                    HorizontalAlignment="Center" 
-                                    Click="BtnLogin_OnClick"/>
+                                    HorizontalAlignment="Center"
+                                    Click="BtnLogin_OnClick" />
                         </StackPanel>
                     </Grid>
                     <Grid x:Name="GridLogout">
@@ -39,11 +49,11 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="已登录"
                                    Margin="5"
-                                   Style="{StaticResource MessageDialogTitleStyle}"/>
+                                   Style="{StaticResource MessageDialogTitleStyle}" />
                         <Button Grid.Column="1"
                                 Content="登出"
                                 VerticalAlignment="Top"
-                                Click="BtnLogout_OnClick"/>
+                                Click="BtnLogout_OnClick" />
                     </Grid>
                 </Grid>
             </PivotItem>

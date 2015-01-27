@@ -1,26 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Phone.UI.Input;
-using Windows.Storage;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-
-// “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
+﻿// “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
 using GalaSoft.MvvmLight.Views;
 using SoftwareKobo.CnblogsAPI.Service;
 using SoftwareKobo.CnblogsNews.Data;
 using SoftwareKobo.CnblogsNews.Helper;
+using System;
+using System.Net;
+using Windows.Phone.UI.Input;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace SoftwareKobo.CnblogsNews.View
 {
@@ -45,12 +33,14 @@ namespace SoftwareKobo.CnblogsNews.View
 
             InitRenderingEngineSelection();
 
+            InitLittleTail();
+
             InitLoginGrid();
 
             base.OnNavigatedTo(e);
         }
 
-        void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)
+        private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)
         {
             if (Frame.CanGoBack)
             {
@@ -85,10 +75,16 @@ namespace SoftwareKobo.CnblogsNews.View
                 case RenderingEngine.Inter:
                     cmbEngine.SelectedItem = CmbInter;
                     break;
+
                 case RenderingEngine.Browser:
                     cmbEngine.SelectedItem = CmbBrowser;
                     break;
             }
+        }
+
+        private void InitLittleTail()
+        {
+            txtLittleTail.Text = LocalSettings.LittleTail;
         }
 
         private void InitLoginGrid()
@@ -144,6 +140,16 @@ namespace SoftwareKobo.CnblogsNews.View
             LocalSettings.LoginCookie = null;
             GridLogin.Visibility = Visibility.Visible;
             GridLogout.Visibility = Visibility.Collapsed;
+        }
+
+        private void TxtLittleTail_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            LocalSettings.LittleTail = txtLittleTail.Text;
+        }
+
+        private void BtnResetLittleTail_Click(object sender, RoutedEventArgs e)
+        {
+            LocalSettings.LittleTail = "——由博客园新闻WP8.1客户端发送";
         }
     }
 }
