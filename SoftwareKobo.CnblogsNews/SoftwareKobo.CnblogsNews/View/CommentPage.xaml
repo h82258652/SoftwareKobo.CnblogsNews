@@ -13,13 +13,15 @@
         <converter:TimeAgoConverter x:Key="TimeAgoConverter" />
     </Page.Resources>
     <Page.BottomAppBar>
-        <CommandBar>
+        <CommandBar x:Name="CmdBar">
             <AppBarButton x:Name="btnNewComment"
                           Icon="Send"
                           Label="新评论"
                           Click="BtnNewComment_OnClick">
                 <FlyoutBase.AttachedFlyout>
-                    <Flyout Placement="Full">
+                    <Flyout Placement="Full"
+                            Opened="Flyout_OnOpened"
+                            Closed="Flyout_OnClosed">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
@@ -29,12 +31,12 @@
                                      Grid.Row="0"
                                      VerticalAlignment="Stretch"
                                      AcceptsReturn="True"
-                                     Margin="0" />
+                                     Margin="0"
+                                     GotFocus="tbComment_OnGotFocus" />
                             <Button Grid.Row="1"
                                     HorizontalAlignment="Center"
-                                    Click="BtnSendComment_Click">
-                                <SymbolIcon Symbol="Send" />
-                            </Button>
+                                    Click="BtnSendComment_Click"
+                                    x:Name="btnSendComment"/>
                         </Grid>
                     </Flyout>
                 </FlyoutBase.AttachedFlyout>
@@ -53,7 +55,7 @@
                 <DataTemplate>
                     <Grid x:Name="GridComment"
                           Margin="20,0,20,10"
-                          PointerReleased="Comment_OnPointerReleased">
+                          Tapped="Comment_OnTapped">
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition />
@@ -81,8 +83,7 @@
                                        IsTextSelectionEnabled="False" />
                         <FlyoutBase.AttachedFlyout>
                             <MenuFlyout>
-                                <MenuFlyoutItem DataContext="{Binding ElementName=GridComment,Path=DataContext}"
-                                                Text="回复"
+                                <MenuFlyoutItem Text="回复"
                                                 Click="MenuFlyoutItem_OnClick" />
                             </MenuFlyout>
                         </FlyoutBase.AttachedFlyout>

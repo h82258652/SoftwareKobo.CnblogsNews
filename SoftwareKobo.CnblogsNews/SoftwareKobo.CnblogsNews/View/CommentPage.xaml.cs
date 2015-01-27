@@ -3,6 +3,7 @@
 using System;
 using System.Linq;
 using Windows.UI.Popups;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
@@ -14,6 +15,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using SoftwareKobo.CnblogsAPI.Service;
 using SoftwareKobo.CnblogsNews.Data;
+using SoftwareKobo.CnblogsNews.Helper;
 using SoftwareKobo.CnblogsNews.Model;
 using SoftwareKobo.CnblogsNews.Service;
 using SoftwareKobo.CnblogsNews.ViewModel;
@@ -66,6 +68,7 @@ namespace SoftwareKobo.CnblogsNews.View
             if (LocalSettings.LoginCookie == null)
             {
                 btnNewComment.Visibility = Visibility.Collapsed;
+                CmdBar.ClosedDisplayMode = AppBarClosedDisplayMode.Minimal;
             }
 
             base.OnNavigatedTo(e);
@@ -86,13 +89,16 @@ namespace SoftwareKobo.CnblogsNews.View
             if (frameworkElement != null)
             {
                 tbComment.Text = string.Empty;
+                btnSendComment.Content = "发送";
                 btnNewComment.Tag = null;
-                FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
+                FlyoutBase.ShowAttachedFlyout(frameworkElement);
             }
         }
 
         private async void BtnSendComment_Click(object sender, RoutedEventArgs e)
         {
+            await StatusBarHelper.Display(true);
+
             var comment = tbComment.Text;
             comment = comment + Environment.NewLine + "——由博客园新闻WP8.1客户端发送";
 
@@ -115,27 +121,30 @@ namespace SoftwareKobo.CnblogsNews.View
             {
                 await new DialogService().ShowError(exception, "错误", "关闭", null);
             }
-            bool isSuccess = UserService.IsSendNewsCommentSuccess(result);
-            if (isSuccess)
-            {
-                await new DialogService().ShowMessage("发送成功", "成功");
-                ViewModel.LoadComments();// 刷新评论。
-                tbComment.Text = string.Empty;// 清空已发送的内容。
-                btnNewComment.Tag = null;// 清空回复 Id。
-            }
             else
             {
-                await new DialogService().ShowMessage(result, "错误");
+                bool isSuccess = UserService.IsSendNewsCommentSuccess(result);
+                if (isSuccess)
+                {
+                    if (btnNewComment.Tag is int)
+                    {
+                        await new DialogService().ShowMessage("回复成功", "成功");
+                    }
+                    else
+                    {
+                        await new DialogService().ShowMessage("发送成功", "成功");
+                    }
+                    ViewModel.LoadComments();// 刷新评论。
+                    tbComment.Text = string.Empty;// 清空已发送的内容。
+                    btnNewComment.Tag = null;// 清空回复 Id。
+                }
+                else
+                {
+                    await new DialogService().ShowMessage(result, "错误");
+                }
             }
-        }
 
-        private void Comment_OnPointerReleased(object sender, PointerRoutedEventArgs e)
-        {
-            var frameworkElement = sender as FrameworkElement;
-            if (frameworkElement != null && LocalSettings.LoginCookie != null)
-            {
-                FlyoutBase.ShowAttachedFlyout(frameworkElement);
-            }
+            await StatusBarHelper.Display(false);
         }
 
         private void MenuFlyoutItem_OnClick(object sender, RoutedEventArgs e)
@@ -157,8 +166,33 @@ namespace SoftwareKobo.CnblogsNews.View
             }
 
             tbComment.Text = "@" + comment.Author.Name + Environment.NewLine;
+            btnSendComment.Content = "回复";
             btnNewComment.Tag = comment.Id;
             FlyoutBase.ShowAttachedFlyout(btnNewComment);
+        }
+
+        private void tbComment_OnGotFocus(object sender, RoutedEventArgs e)
+        {
+            tbComment.SelectionStart = tbComment.Text.Length;
+        }
+
+        private void Flyout_OnOpened(object sender, object e)
+        {
+            CmdBar.Visibility = Visibility.Collapsed;
+        }
+
+        private void Flyout_OnClosed(object sender, object e)
+        {
+            CmdBar.Visibility = Visibility.Visible;
+        }
+
+        private void Comment_OnTapped(object sender, TappedRoutedEventArgs e)
+        {
+            var frameworkElement = sender as FrameworkElement;
+            if (frameworkElement != null && LocalSettings.LoginCookie != null)
+            {
+                FlyoutBase.ShowAttachedFlyout(frameworkElement);
+            }
         }
     }
 }
