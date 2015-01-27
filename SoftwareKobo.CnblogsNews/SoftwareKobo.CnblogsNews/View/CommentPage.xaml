@@ -31,6 +31,7 @@
                                      Grid.Row="0"
                                      VerticalAlignment="Stretch"
                                      AcceptsReturn="True"
+                                     TextWrapping="Wrap"
                                      Margin="0"
                                      GotFocus="tbComment_OnGotFocus" />
                             <Button Grid.Row="1"
