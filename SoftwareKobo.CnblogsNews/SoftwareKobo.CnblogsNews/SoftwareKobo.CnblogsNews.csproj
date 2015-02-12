@@ -14,7 +14,7 @@
     <MinimumVisualStudioVersion>12</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{76F1466A-8B6D-4E39-A767-685A06062A39};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundlePlatforms>neutral</AppxBundlePlatforms>
     <AppxBundle>Always</AppxBundle>
     <NuGetPackageImportStamp>b24c839d</NuGetPackageImportStamp>
@@ -200,15 +200,11 @@
     </Reference>
     <Reference Include="SoftwareKobo.CnblogsAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SoftwareKobo.CnblogsAPI.1.2.3\lib\SoftwareKobo.CnblogsAPI.dll</HintPath>
+      <HintPath>..\packages\SoftwareKobo.CnblogsAPI.1.2.5\lib\SoftwareKobo.CnblogsAPI.dll</HintPath>
     </Reference>
     <Reference Include="SoftwareKobo.HtmlRender.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SoftwareKobo.HtmlRender.WinRT.1.1.1\lib\wpa81\SoftwareKobo.HtmlRender.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="SoftwareKobo.Net.WebUtility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SoftwareKobo.Net.WebUtility.1.0.4\lib\SoftwareKobo.Net.WebUtility.dll</HintPath>
+      <HintPath>..\packages\SoftwareKobo.HtmlRender.WinRT.1.1.2\lib\wpa81\SoftwareKobo.HtmlRender.Core.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http.Extensions">
       <HintPath>..\packages\Microsoft.Net.Http.2.2.28\lib\wpa81\System.Net.Http.Extensions.dll</HintPath>
